@@ -38,6 +38,22 @@
               </ul>
             </div>
           </nav>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+        $(document).ready(function () {
+            $('form').on('submit', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: './add_customer.php',
+                    data: $('#add_customer').serialize(),
+                    success: function () {
+                        alert('Customer added successfully!');
+                    }
+                });
+            });
+        });
+    </script>
   </head>
 
   <body>
@@ -100,48 +116,56 @@
             <div class="card card-default">
                 <div class="card-header">Add Movie</div>
                 <div class="card-body">
-                    <form>
+                    <form id="add_movie">
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" placeholder="Example input">
+                            <input type="text" class="form-control" id="title" name="title" placeholder="">
                         </div>
                         <div class="form-group">
                             <label for="director">Director</label>
-                            <input type="text" class="form-control" id="director" placeholder="Another input">
+                            <input type="text" class="form-control" id="director" name="director" placeholder="">
                         </div>
                         <div class="form-group">
                                 <label for="length">Length</label>
-                                <input type="text" class="form-control" id="length" placeholder="Another input">
+                                <input type="text" class="form-control" name="length" id="length" placeholder="">
                         </div>
                         <!-- drop down???-->
                         <div class="form-group">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Rating
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">PG</a>
-                                <a class="dropdown-item" href="#">14-A</a>
-                                <a class="dropdown-item" href="#">R</a>
-                              </div>
+                            <label for="rating">Rating</label>
+                            <select class="form-control" id="rating">
+                                <option class="dropdown-item" href="#">PG</option>
+                                <option class="dropdown-item" href="#">14-A</option>
+                                <option class="dropdown-item" href="#">R</option>
+                                </select>
+                       
                         </div>
                         <div class="form-group">
                                 <label for="actors">Actors</label>
-                                <input type="text" class="form-control" id="actors" placeholder="Another input">
+                                <input type="text" class="form-control" id="actors" name="actors" placeholder="">
                         </div>
                         <!-- drop down -->
                         <div class="form-group">
                             <label for="productioncompany">Production Company</label>
-                            <input type="text" class="form-control" id="productioncompany" placeholder="Another input">
+                            <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
                         </div>
                         <!-- supplier dropdown -->
                         <div class="form-group">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Supplier
-                                    </button>
-                                    <!-- populate on load with supplir-->
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                </div>
-                        </div>
+                            <label for="supplier">Supplier</label>
+                            <select class="form-control" id="supplier">
+                                <!-- populate on load with supplir-->
+                                
+                                    <?php
+                                        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                        $rows = $dbh->query('select name,phone_number from supplier');
+                        
+                                        foreach($rows as $row) {
+                                            echo '<option class="dropdown-item" value="'.$row[1].'">'.$row[0].'</option>';
+                                        }
+                                        $dbh = null;
+                                    ?>
+                                    </select>
+                            </div>
+                        
                         <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                 </div>
@@ -158,7 +182,6 @@
                             <th scope="col"></th>
                             <th scope="col">First Name</th>
                             <th scope="col">Last Name</th>
-                            <th scope="col">Location</th>
                             <th scope="col">Email</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Login Id</th>
@@ -168,31 +191,23 @@
                         </thead>
                         <tbody>
                             <?php
-
+                                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                $rows = $dbh->query("select * from customer");
+                                // add try catch
+                                // account number is id for the row so we can delete the rows with jquery later
+                                foreach($rows as $row) {
+                                    echo '<tr id="'.$row[2].'"><td><div class="radio"><label><input type="radio" id="regular" name="optradio"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[6].
+                                    '</td><td>'.$row[3].'</td><td>'.$row[5].'</td><td>'.$row[7].', '.$row[8].', '.$row[9].'</td><tr>';
+                                }
+                                $dbh = null;
                             ?>
-                           <!-- <tr>
-                                <td>
-                                    <div class="radio">
-                                        <label><input type="radio" id='regular' name="optradio"></label>
-                                    </div>
-                                </td>
-                                <td> 
-                                    <div class="radiotext">
-                                    <label for='movie1'>Movie 1</label>
-                                    </td>
-
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            
-                            </tr>-->
-                         
                         </tbody>
                         </table>
                         </div>
-                    
                         <div class="btn-group row">
                             <div class="col-sm-6">
                                 <button type="button" id="customer-history" class="btn btn-primary">View Purchase History</button>
+                                <!-- On button click, -->
                             </div>
                             <div class="col-sm-6">
                             <button type="button" id="customer-delete" class="btn btn-danger">Delete Account</button>
@@ -224,8 +239,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+   <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <!--<script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>-->
     <script src="./../bootstrap-4.0.0/assets/js/vendor/popper.min.js"></script>
     <script src="./../bootstrap-4.0.0/dist/js/bootstrap.min.js"></script>
   </body>
