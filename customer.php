@@ -60,6 +60,7 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th scope="col"></th>
                   <th scope="col">Movie Title</th>
                   <th scope="col">Theatre Complex</th>
                   <th scope="col">Street</th>
@@ -79,6 +80,7 @@
                 foreach($rows as $row) {
                   if ($date < $row["start_date"]) { // only displaying showings that are active
                     echo "<tr>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
                     echo "<td>".$row["name"]."</td>";
                     echo "<td>".$row["street"]."</td>";
