@@ -56,31 +56,32 @@
         <div class="card card-default">
           <div class="card-header">What's Playing</div>
 
-            <div class="card-body">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Movie Title</th>
-                  <th scope="col">Theatre Complex</th>
-                  <th scope="col">Street</th>
-                  <th scope="col">City</th>
+          <div class="card-body">
+            <form action='' method='post'>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Movie Title</th>
+                    <th scope="col">Theatre Complex</th>
+                    <th scope="col">Street</th>
+                    <th scope="col">City</th>
 
-                </tr>
-              </thead>
-              <tbody>
-              <?php
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
                 date_default_timezone_set('America/Toronto');
                 $timezone = date_default_timezone_get();
-                echo "The current server timezone is: " . $timezone;
+                // echo "The current server timezone is: " . $timezone;
                 $date = date('Y/m/d H:i:s');
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select name, street, city, start_date, title from playing");
+                $rows = $dbh->query("select name, street, city, start_date, title, director from playing");
                 foreach($rows as $row) {
                   if ($date < $row["start_date"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio'></label></div></td>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['title']."'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
                     echo "<td>".$row["name"]."</td>";
                     echo "<td>".$row["street"]."</td>";
@@ -90,78 +91,20 @@
                 }
                 $dbh = null;
               ?>
-              </tbody>
-            </table>
-          </div>
-
-
-          <div class="card-body">
-
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Reserve</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Theatre Complex</th>
-                  <th scope="col">Start Time</th>
-                  <th scope="col">Duration</th>
-
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" id='regular' name="optradio">
-                      </label>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="radiotext">
-                      <label for='movie1'>Movie 1</label>
-                  </td>
-
-                  <td>Otto</td>
-                  <td>@mdo</td>
-
-                </tr>
-                <tr>
-                  <td>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" id='regular' name="optradio">
-                      </label>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="radiotext">
-                      <label for='movie2'>Movie 2</label>
-                  </td>
-
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" id='regular' name="optradio">
-                      </label>
-                    </div>
-                  </td>
-                  <td>Larry the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="btn-group">
-
-              <button type="button" id="reservation" class="btn btn-primary">Make Reservation</button>
-            </div>
-            </div>
-            </div>
+                </tbody>
+              </table>
+              <div class="btn-group">
+                <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>
+              </div>
+              <?php
+                if (isset($_POST['ReserveButton'])) {
+                  if(isset($_POST['optradio']))
+                  {
+                    echo "You have selected:" .$_POST['optradio'];
+                  }
+                }
+              ?>
+            </form>
           </div>
 
         </div>
