@@ -55,6 +55,44 @@
       <div class="col-md-9">
         <div class="card card-default">
           <div class="card-header">What's Playing</div>
+
+            <div class="card-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Movie Title</th>
+                  <th scope="col">Theatre Complex</th>
+                  <th scope="col">Street</th>
+                  <th scope="col">City</th>
+
+                </tr>
+              </thead>
+              <tbody>
+              <?php
+                date_default_timezone_set('America/Toronto');
+                $timezone = date_default_timezone_get();
+                echo "The current server timezone is: " . $timezone;
+                $date = date('Y/m/d H:i:s');
+
+                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                $rows = $dbh->query("select name, street, city, start_date, title from playing");
+                foreach($rows as $row) {
+                  if ($date < $row["start_date"]) { // only displaying showings that are active
+                    echo "<tr>";
+                    echo "<td>".$row["title"]."</td>";
+                    echo "<td>".$row["name"]."</td>";
+                    echo "<td>".$row["street"]."</td>";
+                    echo "<td>".$row["city"]."</td>";
+                    echo "</tr>";
+                  }
+                }
+                $dbh = null;
+              ?>
+              </tbody>
+            </table>
+          </div>
+
+
           <div class="card-body">
 
             <table class="table table-hover">
