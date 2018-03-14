@@ -41,19 +41,19 @@
           </nav>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
-        $(document).ready(function () {
-            $('form').on('submit', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    type: 'post',
-                    url: './add_customer.php',
-                    data: $('#add_customer').serialize(),
-                    success: function () {
-                        alert('Customer added successfully!');
-                    }
-                });
-            });
-        });
+        // $(document).ready(function () {
+        //     $('form').on('submit', function (e) {
+        //         e.preventDefault();
+        //         $.ajax({
+        //             type: 'post',
+        //             url: './add_customer.php',
+        //             data: $('#add_customer').serialize(),
+        //             success: function () {
+        //                 alert('Customer added successfully!');
+        //             }
+        //         });
+        //     });
+        // });
     </script>
   </head>
 
@@ -80,7 +80,6 @@
                     <button type="button" class="btn btn-warning">Edit Profile</button>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="col-lg-9">
@@ -89,23 +88,24 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h4>
-                                Popular Movie
-                            </h4>
-                            <p id="popular-movie">
-                                Tickets Sold:
-
-                            </p>
-
+                            <h4>Popular Movie</h4>
+                                <?php
+                                    $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                    $row= $dbh->query("SELECT MAX(all_theatres) as movie, title FROM (SELECT SUM(seats_sold) as all_theatres, title FROM (SELECT theatre.max_seats-showing.seats_available as seats_sold, showing.title FROM theatre INNER JOIN showing) difference GROUP BY title) max_movie");
+                                    $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                                    echo '<p id="popular-movie">'.$results[0]['title'].'<br> Tickets Sold: '.$results[0]['movie'].'</p>';
+                                    $dbh = null;
+                                ?>
                         </div>
                         <div class="col-sm-6">
-                            <h4>
-                                Popular Theatre Complex
-                            </h4>
-                            <p id="popular-theater">
-                                Tickets Sold:
-                            </p>
-
+                            <h4>Popular Theatre Complex</h4>
+                            <?php
+                                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                $row= $dbh->query("SELECT max(seats) popular, name FROM (SELECT SUM(seats_sold) as seats, name FROM (SELECT theatre.max_seats - showing.seats_available AS seats_sold, theatre.name as name FROM theatre INNER JOIN showing) hits GROUP BY name) popular_complex");
+                                $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                                echo '<p id="popular-movie">'.$results[0]['name'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
+                                $dbh = null;
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -117,58 +117,60 @@
             <div class="card card-default">
                 <div class="card-header">Add Movie</div>
                 <div class="card-body">
-                    <form id="add_movie">
-                        <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" name="title" placeholder="">
-                        </div>
-                        <div class="form-group">
-                            <label for="director">Director</label>
-                            <input type="text" class="form-control" id="director" name="director" placeholder="">
-                        </div>
-                        <div class="form-group">
-                                <label for="length">Length</label>
-                                <input type="text" class="form-control" name="length" id="length" placeholder="">
-                        </div>
-                        <!-- drop down???-->
-                        <div class="form-group">
-                            <label for="rating">Rating</label>
-                            <select class="form-control" id="rating">
-                                <option class="dropdown-item" href="#">PG</option>
-                                <option class="dropdown-item" href="#">14-A</option>
-                                <option class="dropdown-item" href="#">R</option>
-                                </select>
-                       
-                        </div>
-                        <div class="form-group">
-                                <label for="actors">Actors</label>
-                                <input type="text" class="form-control" id="actors" name="actors" placeholder="">
-                        </div>
-                        <!-- drop down -->
-                        <div class="form-group">
-                            <label for="productioncompany">Production Company</label>
-                            <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
-                        </div>
-                        <!-- supplier dropdown -->
-                        <div class="form-group">
-                            <label for="supplier">Supplier</label>
-                            <select class="form-control" id="supplier">
-                                <!-- populate on load with supplir-->
-                                
-                                    <?php
-                                        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                        $rows = $dbh->query('select name,phone_number from supplier');
-                        
-                                        foreach($rows as $row) {
-                                            echo '<option class="dropdown-item" value="'.$row[1].'">'.$row[0].'</option>';
-                                        }
-                                        $dbh = null;
-                                    ?>
-                                    </select>
-                            </div>
-                        
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                <form id="add_movie" method="post" action="add_customer.php">
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="director">Director</label>
+                        <input type="text" class="form-control" id="director" name="director" placeholder="">
+                    </div>
+                    <div class="form-group">
+                            <label for="length">Length</label>
+                            <input type="text" class="form-control" name="length" id="length" placeholder="">
+                    </div>
+                    <div class="form-group">
+                            <label for="plotsynopsis">Plot Synopsis</label>
+                            <input type="text" class="form-control" name="plotsynopsis" id="plotsynopsis" placeholder="">
+                    </div>
+                    <!-- drop down???-->
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <select class="form-control" id="rating">
+                            <option class="dropdown-item" name="rating" value="G">G</option>
+                            <option class="dropdown-item" name="rating" value="PG">PG</option>
+                            <option class="dropdown-item" name="rating" value="14-A">14-A</option>
+                            <option class="dropdown-item" name="rating" value="18-A">18-A</option>
+                            <option class="dropdown-item" name="rating" value="R">R</option>
+                            </select>
+                    
+                    </div>
+                    <div class="form-group">
+                            <label for="actors">Actors</label>
+                            <input type="text" class="form-control" id="actors" name="actors" placeholder="">
+                    </div>
+                    <!-- drop down -->
+                    <div class="form-group">
+                        <label for="productioncompany">Production Company</label>
+                        <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
+                    </div>
+                    <!-- supplier dropdown -->
+                    <div class="form-group">
+                        <label for="supplier">Supplier</label>
+                        <select class="form-control" name="supplier">
+                        <?php
+                            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                            $rows = $dbh->query('select name,phone_number from supplier');
+
+                            foreach($rows as $row) {
+                                echo '<option class="dropdown-item" name="supplier" value="'.$row[1].'">'.$row[0].'</option>';
+                            }
+                            $dbh = null;
+
+                            echo '</select><button type="submit" class="btn btn-primary">Submit</button></form>';
+                    ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -177,7 +179,7 @@
                 <div class="card-header">Customers</div>
                 <div class="card-body">
                     <div class="row">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-responsive">
                         <thead>
                             <tr>
                             <th scope="col"></th>
