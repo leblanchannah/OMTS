@@ -8,7 +8,7 @@ city			VARCHAR(50) NOT NULL,
 postal_code		VARCHAR(6)	NOT NULL,
 phone_number	INTEGER		NOT NULL,
 
-PRIMARY KEY(name, street, city, postal_code)
+PRIMARY KEY(name)
 );
 
 CREATE TABLE theatre(
@@ -17,33 +17,27 @@ max_seats		INTEGER		NOT NULL,
 screen_size		CHAR(1)	NOT NULL,
 
 name			VARCHAR(50)	NOT NULL,
-street			VARCHAR(50)	NOT NULL,
-city			VARCHAR(50) NOT NULL,
-postal_code		VARCHAR(6)	NOT NULL,
 
-PRIMARY KEY(num, name, street, city, postal_code),
-FOREIGN KEY(name, street, city, postal_code) REFERENCES theatre_complex(name, street, city, postal_code)
+PRIMARY KEY(num, name),
+FOREIGN KEY(name) REFERENCES theatre_complex(name)
 );
 
 CREATE TABLE showing(
 start_time		DATE	NOT NULL,
 seats_available			INTEGER	NOT NULL,
 
-title			VARCHAR(100) NOT NULL,
-director			VARCHAR(50) NOT NULL,
+movie_id INTEGER NOT NULL,
 
 num				INTEGER		NOT NULL,
 name			VARCHAR(50)	NOT NULL,
-street			VARCHAR(50)	NOT NULL,
-city			VARCHAR(50) NOT NULL,
-postal_code		VARCHAR(6)	NOT NULL,
 
-PRIMARY KEY(num, name, street, city, postal_code, start_time, title, director),
-FOREIGN KEY(num, name, street, city, postal_code) REFERENCES theatre(num, name, street, city, postal_code),
-FOREIGN KEY(title, director) REFERENCES movie(title, director)
+PRIMARY KEY(num, name, start_time, movie_id),
+FOREIGN KEY(num, name) REFERENCES theatre(num, name),
+FOREIGN KEY(movie_id) REFERENCES movie(movie_id)
 );
 
 CREATE TABLE movie(
+movie_id      INTEGER NOT NULL AUTO_INCREMENT,
 title			VARCHAR(100) NOT NULL,
 director			VARCHAR(50) NOT NULL,
 length			DOUBLE		 NOT NULL,
@@ -52,11 +46,10 @@ plot_synopsis	TEXT,
 actors			TEXT,
 production_company	VARCHAR(50),
 
-supplier_name		VARCHAR(40)	NOT NULL,
 supplier_phone_number INTEGER NOT NULL,
 
-PRIMARY KEY(title, director),
-FOREIGN KEY(supplier_name, supplier_phone_number) REFERENCES supplier(name, phone_number)
+PRIMARY KEY(movie_id),
+FOREIGN KEY(supplier_phone_number) REFERENCES supplier(phone_number)
 );
 
 CREATE TABLE playing(
@@ -64,16 +57,12 @@ start_date  DATE NOT NULL,
 end_date    DATE NOT NULL,
 
 name			VARCHAR(50)	NOT NULL,
-street			VARCHAR(50)	NOT NULL,
-city			VARCHAR(50) NOT NULL,
-postal_code		VARCHAR(6)	NOT NULL,
 
-title			VARCHAR(100) NOT NULL,
-director			VARCHAR(50) NOT NULL,
+movie_id INTEGER NOT NULL,
 
-PRIMARY KEY(name, street, city, postal_code, title, director),
-FOREIGN KEY(name, street, city, postal_code) REFERENCES theatre_complex(name, street, city, postal_code),
-FOREIGN KEY(title, director) REFERENCES movie(title, director)
+PRIMARY KEY(name, movie_id),
+FOREIGN KEY(name) REFERENCES theatre_complex(name),
+FOREIGN KEY(movie_id) REFERENCES movie(movie_id)
 );
 
 CREATE TABLE supplier(
@@ -84,7 +73,7 @@ postal_code		VARCHAR(6)	NOT NULL,
 phone_number			INTEGER NOT NULL,
 contact_name		VARCHAR(40) NOT NULL,
 
-PRIMARY KEY(name, phone_number)
+PRIMARY KEY(phone_number)
 );
 
 CREATE TABLE customer(
@@ -125,13 +114,12 @@ PRIMARY KEY(account_number)
 CREATE TABLE reviews(
 review TEXT,
 
-title			VARCHAR(100) NOT NULL,
-director			VARCHAR(50),
+movie_id INTEGER NOT NULL,
 
 account_number INTEGER NOT NULL,
 
-PRIMARY KEY(title, director, account_number),
-FOREIGN KEY(title, director) REFERENCES movie(title, director),
+PRIMARY KEY(movie_id, account_number),
+FOREIGN KEY(movie_id) REFERENCES movie(movie_id),
 FOREIGN KEY(account_number) REFERENCES customer(account_number)
 );
 
@@ -140,19 +128,15 @@ account_number	INTEGER		NOT NULL,
 
 num				INTEGER		NOT NULL,
 name			VARCHAR(50)	NOT NULL,
-street			VARCHAR(50)	NOT NULL,
-city			VARCHAR(50) NOT NULL,
-postal_code		VARCHAR(6)	NOT NULL,
 start_time		DATE	NOT NULL,
-title			VARCHAR(100) NOT NULL,
-director			VARCHAR(50),
+movie_id INTEGER NOT NULL,
 
 seats_reserved integer NOT NULL,
 booking_time DATE NOT NULL,
 cancel_flag	BOOLEAN NOT NULL,
 
-PRIMARY KEY(account_number, num, name, street, city, postal_code, start_time, title, director),
-FOREIGN KEY(num, name, street, city, postal_code, start_time, title, director) REFERENCES showing(num, name, street, city, postal_code, start_time, title, director),
+PRIMARY KEY(account_number, num, name, start_time, movie_id),
+FOREIGN KEY(num, name, start_time, movie_id) REFERENCES showing(num, name, start_time, title, director),
 FOREIGN KEY(account_number) REFERENCES customer(account_number)
 );
 
