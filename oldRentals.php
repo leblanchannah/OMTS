@@ -39,12 +39,14 @@
         <p>
           <i class="glyphicon glyphicon-envelope" id="user-email"></i>email@example.com
         </p>
-        <div class="btn-group">
-          <!-- load user info -->
-          <!-- edit profile button-->
-          <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-          <button type="button" class="btn btn-danger">Edit Profile</button>
-        </div>
+        <form action= "editProfile.php" method="post">
+            <div class="btn-group">
+              <!-- load user info -->
+              <!-- edit profile button-->
+              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+              <button type="submit" class="btn btn-danger">Edit Profile</button>
+            </div>
+            </form>
       </div>
     </div>
   </div>

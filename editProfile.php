@@ -26,49 +26,17 @@
 
 
 
-  <div class="container">
-
-    <div class="row">
-      <div class="col-md-3">
+    <div class="container">
+    <div class="col-md-6">
         <div class="card card-default">
-          <div class="card-header">Customer Profile</div>
-          <div class="card-body">
-            <h4 id="user-name">Test Name</h4>
-            <small>
-              <cite title="San Francisco, USA" id="user-city">San Francisco, USA
-                <i class="glyphicon glyphicon-map-marker">
-                </i>
-              </cite>
-            </small>
-            <p>
-              <i class="glyphicon glyphicon-envelope" id="user-email"></i>email@example.com
-            </p>
-            <form action= "editProfile.php" method="post">
-            <div class="btn-group">
-              <!-- load user info -->
-              <!-- edit profile button-->
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="submit" class="btn btn-danger">Edit Profile</button>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-9">
-        <div class="card card-default">
-          <div class="card-header">What's Playing</div>
+          <div class="card-header"></div>
 
           <div class="card-body">
             <form action='' method='post'>
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Movie Title</th>
-                    <th scope="col">Theatre Complex</th>
-                    <th scope="col">Street</th>
-                    <th scope="col">City</th>
-
+                    <th scope="col">User Profile</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -79,38 +47,35 @@
                 $date = date('Y/m/d H:i:s');
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select m.title, p.name, c.street, c.city, p.start_date, p.end_date from playing p, theatre_complex c join movie m where p.movie_id = m.movie_id and p.name = c.name");
+                $rows = $dbh->query("select * from customer where account_number = 1");
                 foreach($rows as $row) {
-                  if ($date > $row["start_date"] && $date < $row["end_date"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['title']."'></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
-                    echo "<td>".$row["name"]."</td>";
-                    echo "<td>".$row["street"]."</td>";
-                    echo "<td>".$row["city"]."</td>";
-                    echo "</tr>";
+                    echo "<td>Account Number: ".$row["account_number"]."</td></tr>";
+                    echo "<td>First Name: ".$row["fname"]."</td></tr>";
+                    echo "<td>Last Name: ".$row["lname"]."</td></tr>";
+                    echo "<td>Password: ".$row["password"]."</td></tr>";
                   }
-                }
+                
                 $dbh = null;
               ?>
                 </tbody>
               </table>
-              <div class="btn-group">
+              <!-- <div class="btn-group">
                 <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>
               </div>
-              <?php
+               ?php
                 if (isset($_POST['ReserveButton'])) {
                   if(isset($_POST['optradio']))
                   {
                     echo "You have selected:" .$_POST['optradio'];
                   }
                 }
-              ?>
+              ? -->
             </form>
           </div>
 
         </div>
-      </div>
+    </div>
 
 
 
