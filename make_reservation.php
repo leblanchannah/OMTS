@@ -64,33 +64,43 @@
                 <thead>
                   <tr>
                     <th scope="col"></th>
-                    <th scope="col">Movie Title</th>
-                    <th scope="col">Theatre Complex</th>
-                    <th scope="col">Street</th>
-                    <th scope="col">City</th>
+                    <th scope="col">Theatre Number</th>
+                    <th scope="col">Start Time</th>
+                    <th scope="col">Seats Available</th>
 
                   </tr>
                 </thead>
                 <tbody>
                   <?php
+                    if (isset($_POST['ReserveButton'])) {
+                        if(isset($_POST['optradio']))
+                        {
+                        // echo "You have selected:" .$_POST['optradio'];
+                        $movie_id = $_POST['optradio'];
+                        }
+                    }
+                    $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                    $rows = $dbh->query("select m.title, m.length, m.rating, m.plot_synopsis, m.actors, m.director, m.production_company from movie m where m.movie_id = $movie_id");
+                    // echo ""
+
+
                 date_default_timezone_set('America/Toronto');
                 $timezone = date_default_timezone_get();
-                // echo "The current server timezone is: " . $timezone;
+                // // echo "The current server timezone is: " . $timezone;
                 $date = date('Y/m/d H:i:s');
 
-                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select m.title, p.name, c.street, c.city, p.start_date, p.end_date, m.movie_id from playing p, theatre_complex c join movie m where p.movie_id = m.movie_id and p.name = c.name");
+                $rows = $dbh->query("select s.start_time, s.seats_available, s.num as theatre_num from showing s where s.movie_id = $movie_id");
+
                 foreach($rows as $row) {
-                  if ($date > $row["start_date"] && $date < $row["end_date"]) { // only displaying showings that are active
+                //   if ($date > $row["start_date"] && $date < $row["end_date"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['movie_id']."'></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
-                    echo "<td>".$row["name"]."</td>";
-                    echo "<td>".$row["street"]."</td>";
-                    echo "<td>".$row["city"]."</td>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='$movie_id'></label></div></td>";
+                    echo "<td>".$row["theatre_num"]."</td>";
+                    echo "<td>".$row["start_time"]."</td>";
+                    echo "<td>".$row["seats_available"]."</td>";
                     echo "</tr>";
                   }
-                }
+                // }
                 $dbh = null;
               ?>
                 </tbody>
