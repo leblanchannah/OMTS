@@ -79,9 +79,9 @@
                 $date = date('Y/m/d H:i:s');
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select name, street, city, start_date, title, director from playing");
+                $rows = $dbh->query("select m.title, p.name, c.street, c.city, p.start_date, p.end_date from playing p, theatre_complex c join movie m where p.movie_id = m.movie_id and p.name = c.name");
                 foreach($rows as $row) {
-                  if ($date < $row["start_date"]) { // only displaying showings that are active
+                  if ($date > $row["start_date"] && $date < $row["end_date"]) { // only displaying showings that are active
                     echo "<tr>";
                     echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['title']."'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
