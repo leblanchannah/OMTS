@@ -92,6 +92,7 @@ credit_card_num  VARCHAR(30),
 credit_expiry_date DATE,
 
 PRIMARY KEY(account_number)
+
 );
 
 CREATE TABLE admin(
@@ -120,7 +121,7 @@ account_number INTEGER NOT NULL,
 
 PRIMARY KEY(movie_id, account_number),
 FOREIGN KEY(movie_id) REFERENCES movie(movie_id),
-FOREIGN KEY(account_number) REFERENCES customer(account_number)
+FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCADE
 );
 
 CREATE TABLE reserves(
@@ -137,7 +138,7 @@ cancel_flag	BOOLEAN NOT NULL,
 
 PRIMARY KEY(account_number, num, name, start_time, movie_id),
 FOREIGN KEY(num, name, start_time, movie_id) REFERENCES showing(num, name, start_time, movie_id),
-FOREIGN KEY(account_number) REFERENCES customer(account_number)
+FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCADE
 );
 
 --  theatre complex
