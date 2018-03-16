@@ -9,6 +9,7 @@
         //if there is no login,password combination
         foreach($rows as $row) {
             $count ++;
+            $id = $row[0];
         }
          if($count==0){
             echo "Incorrect ID/password.";
@@ -27,9 +28,9 @@
         }
         else{
             $_SESSION['loggedin'] = true;
-            $_SESSION['username'] = $_POST['username'];
-            header("Location: customer.php");
-            exit;
+           $_SESSION['user_id'] = $id[0];
+           header("Location: customer.php");
+           exit;
                   
       }
     }

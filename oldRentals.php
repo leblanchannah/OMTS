@@ -21,7 +21,7 @@
   include_once("navbar.php");
   ?>
 </head>
-
+<?php session_start(); ?>
   <div class="container">
 
 <div class="row">
@@ -69,8 +69,9 @@
               // connect to database
               $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
               // run query
-              $log_in_solution = 1;
-              $oldRentals = $dbh->query("select title, name, booking_time from (select * from reserves where ".$log_in_solution."=  account_number) as T1 where 1");
+              $oldRentals = $dbh->query("select  title, name, booking_time from reserves  
+              rev JOIN movie  mov ON mov.movie_id =  rev.movie_id 
+              where ".$_SESSION['user_id']." = account_number");
               //Create my table 
               foreach($oldRentals as $temp){
               echo '<tr><td>'.$temp[0].'</td><td>'.$temp[1].'</td><td>'.$temp[2].'</td></tr>';
