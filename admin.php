@@ -47,7 +47,7 @@
             $('#goodcall').fadeToggle("slow");
             $('#badcall').fadeToggle("slow");
             $('#customer-delete').on('click', function (e) {
-                //e.preventDefault();
+                e.preventDefault();
                 console.log("customer-delete button clicked");
                 $.ajax({
                     type: 'post',
@@ -69,22 +69,24 @@
                     }
                 });
             });
-            $('#customer-history').on('click',function(e){
-                console.log("customer-history button clicked");
-                $.ajax({
-                    type: 'post',
-                    url: 'customer_history.php',
-                    data: $('#customer_table').serialize(),
-                    success:function(data) {
-                        if (data != "error") {
+        $( "#customer_table input:radio" ).prop("checked", true);
+            //make button for view purchase history unavailable
+            // $('#customer-history').on('click',function(e){
+            //     console.log("customer-history button clicked");
+            //     $.ajax({
+            //         type: 'post',
+            //         url: 'customer_history.php',
+            //         data: $('#customer_table').serialize(),
+            //         success:function(data) {
+            //             if (data != "error") {
 
-                        } else {
+            //             } else {
 
-                        }
-                    }
-                });
+            //             }
+            //         }
+            //     });
 
-            });
+            // });
         });
     </script>
   </head>
@@ -105,26 +107,7 @@
 
     </div>
     <div class="row">
-        <div class="col-lg-3">
-            <div class="card card-default">
-                <div class="card-header">Admin Profile</div>
-                <div class="card-body">
-                    <h4 id="user-name">Test Name</h4>
-                    <small><cite title="San Francisco, USA" id="user-city">San Francisco, USA <i class="glyphicon glyphicon-map-marker">
-                    </i></cite></small>
-                    <p>
-                            <i class="glyphicon glyphicon-envelope" id="user-email"></i>email@example.com
-                    </p>
-                    <div class="btn-group">
-                    <!-- load user info --> 
-                    <!-- edit profile button-->
-                    <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-                    <button type="button" class="btn btn-warning">Edit Profile</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-9">
+        <div class="col-lg-12">
             <div class="card card-default">
                 <div class="card-header">Popular</div>
                 <div class="card-body">
@@ -155,7 +138,7 @@
         </div>
 
     </div>
-
+    <br>
     <div class="row">
         <div class="col-lg-3">
             <div class="card card-default">
@@ -223,7 +206,7 @@
             <div class="card card-default">
                 <div class="card-header">Customers</div>
                 <div class="card-body">
-                    <form id="customer_table">
+                    <form id="customer_table" action="customer_history.php" method="post">
                     <div class="row">
                     <table class="table table-hover table-responsive" id="all_customers">
                         <thead>
@@ -245,7 +228,7 @@
                                 // add try catch
                                 // account number is id for the row so we can delete the rows with jquery later
                                 foreach($rows as $row) {
-                                    echo '<tr id="'.$row[2].'"><td><div class="radio"><label><input type="radio" id="customers" name="customername" value='.$row[2].'></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[6].
+                                    echo '<tr id="'.$row[2].'"><td><div class="radio"><label><input type="radio"" id="customers" name="customername" value='.$row[2].'></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[6].
                                     '</td><td>'.$row[3].'</td><td>'.$row[5].'</td><td>'.$row[7].', '.$row[8].', '.$row[9].'</td><tr>';
                                 }
                                 $dbh = null;
@@ -255,7 +238,7 @@
                         </div>
                         <div class="btn-group row">
                             <div class="col-sm-6">
-                                <button type="button" id="customer-history" class="btn btn-primary">View Purchase History</button>
+                                <button type="submit" id="customer-history" class="btn btn-primary">View Purchase History</button>
                                 <!-- On button click, -->
                             </div>
                             <div class="col-sm-6">
