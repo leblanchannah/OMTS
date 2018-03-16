@@ -43,7 +43,7 @@
             <p>
               <i class="glyphicon glyphicon-envelope" id="user-email"></i>email@example.com
             </p>
-            <form action= "oldRentals.php" method="post">
+            <form action= "editProfile.php" method="post">
             <div class="btn-group">
               <!-- load user info -->
               <!-- edit profile button-->
