@@ -25,32 +25,9 @@
   <div class="container">
 
 <div class="row">
-  <div class="col-md-3">
-    <div class="card card-default">
-      <div class="card-header">Customer Profile</div>
-      <div class="card-body">
-        <h4 id="user-name">Test Name</h4>
-        <small>
-          <cite title="San Francisco, USA" id="user-city">San Francisco, USA
-            <i class="glyphicon glyphicon-map-marker">
-            </i>
-          </cite>
-        </small>
-        <p>
-          <i class="glyphicon glyphicon-envelope" id="user-email"></i>email@example.com
-        </p>
-        <form action= "editProfile.php" method="post">
-            <div class="btn-group">
-              <!-- load user info -->
-              <!-- edit profile button-->
-              <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-              <button type="submit" class="btn btn-danger">Edit Profile</button>
-            </div>
-            </form>
-      </div>
-    </div>
-  </div>
-
+  <?php 
+  include_once("editProfileSection.php");
+  ?>
       <div class="col-md-9">
         <div class="card card-default">
           <div class="card-header">Past Rentals</div>
