@@ -23,7 +23,7 @@ FOREIGN KEY(name) REFERENCES theatre_complex(name)
 );
 
 CREATE TABLE showing(
-start_time		DATE	NOT NULL,
+start_time		DATETIME	NOT NULL,
 seats_available			INTEGER	NOT NULL,
 
 movie_id INTEGER NOT NULL,

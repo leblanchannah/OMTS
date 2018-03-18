@@ -1,5 +1,5 @@
 <!-- admin -->
-
+<?php include 'adminnavbar.php'?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -19,28 +19,7 @@
     <!--https://bootsnipp.com/snippets/featured/login-and-register-tabbed-form -->
     <!-- Custom styles for this template -->
     <link href="customer.css" rel="stylesheet">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="#">OMTS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-      
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" data-toggle="tooltip" title="Home" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" data-toggle="tooltip" title="Browse Movies, Make Reservations" href="#">Browse Movies <span class="sr-only">(current)</span></a>
-                </li>
-                
-                <li class="nav-item active">
-                    <a class="nav-link" data-toggle="tooltip" title="View or cancel purchases" href="#">View Purchases <span class="sr-only">(current)</span></a>
-                </li>
-    
-              </ul>
-            </div>
-          </nav>
+
 
     <script>
         $(document).ready(function () {
@@ -70,122 +49,66 @@
                 });
             });
         $( "#customer_table input:radio" ).prop("checked", true);
-            //make button for view purchase history unavailable
-            // $('#customer-history').on('click',function(e){
-            //     console.log("customer-history button clicked");
-            //     $.ajax({
-            //         type: 'post',
-            //         url: 'customer_history.php',
-            //         data: $('#customer_table').serialize(),
-            //         success:function(data) {
-            //             if (data != "error") {
-
-            //             } else {
-
-            //             }
-            //         }
-            //     });
-
-            // });
         });
     </script>
   </head>
-
-  <body>
-
-    
-
-<div class="container">  
-    <div class="row">
-        <div class="col-sm-12">
-        <div class="alert alert-success" id="goodcall">
-            </div>
-            <div class="alert alert-danger" id="badcall">
-        </div>
-           
-        </div>
-
+<body>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="alert alert-success" id="goodcall"></div>
+      <div class="alert alert-danger" id="badcall"></div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-default">
-                <div class="card-header">Popular</div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>Popular Movie</h4>
-                                 <?php
-                                    // $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                    // $row= $dbh->query("SELECT MAX(all_theatres) as movie, title FROM (SELECT SUM(seats_sold) as all_theatres, title FROM (SELECT theatre.max_seats-showing.seats_available as seats_sold, showing.title FROM theatre INNER JOIN showing) difference GROUP BY title) max_movie");
-                                    // $results = $row->fetchAll(PDO::FETCH_ASSOC);
-                                    // echo '<p id="popular-movie">'.$results[0]['title'].'<br> Tickets Sold: '.$results[0]['movie'].'</p>';
-                                    // $dbh = null;
-                                ?> 
-                        </div>
-                        <div class="col-sm-6">
-                            <h4>Popular Theatre Complex</h4>
-                             <?php
-                                // $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                // $row= $dbh->query("SELECT max(seats) popular, name FROM (SELECT SUM(seats_sold) as seats, name FROM (SELECT theatre.max_seats - showing.seats_available AS seats_sold, theatre.name as name FROM theatre INNER JOIN showing) hits GROUP BY name) popular_complex");
-                                // $results = $row->fetchAll(PDO::FETCH_ASSOC);
-                                // echo '<p id="popular-movie">'.$results[0]['name'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
-                                // $dbh = null;
-                            ?> 
-                        </div>
-                    </div>
-                </div>
+    <!--/.col-sm-12 -->
+  </div>
+  <!-- /.row> -->
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card card-default">
+        <div class="card-header">Add Movie</div>
+        <div class="card-body">
+          <form id="add_movie" method="post" action="add_movie.php">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="">
             </div>
-        </div>
-
-    </div>
-    <br>
-    <div class="row">
-        <div class="col-lg-3">
-            <div class="card card-default">
-                <div class="card-header">Add Movie</div>
-                <div class="card-body">
-                <form id="add_movie" method="post" action="add_movie.php">
-                    <div class="form-group">
-                        <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="director">Director</label>
-                        <input type="text" class="form-control" id="director" name="director" placeholder="">
-                    </div>
-                    <div class="form-group">
-                            <label for="length">Length</label>
-                            <input type="text" class="form-control" name="length" id="length" placeholder="">
-                    </div>
-                    <div class="form-group">
-                            <label for="plotsynopsis">Plot Synopsis</label>
-                            <input type="text" class="form-control" name="plotsynopsis" id="plotsynopsis" placeholder="">
-                    </div>
-                    <!-- drop down???-->
-                    <div class="form-group">
-                        <label for="rating">Rating</label>
-                        <select class="form-control" id="rating" name="rating">
+            <div class="form-group">
+              <label for="director">Director</label>
+              <input type="text" class="form-control" id="director" name="director" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="length">Length</label>
+              <input type="text" class="form-control" name="length" id="length" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="plotsynopsis">Plot Synopsis</label>
+              <input type="text" class="form-control" name="plotsynopsis" id="plotsynopsis" placeholder="">
+            </div>
+            <!-- drop down???-->
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <select class="form-control" id="rating" name="rating">
                             <option class="dropdown-item" name="1" value="G">G</option>
                             <option class="dropdown-item" name="2" value="PG">PG</option>
                             <option class="dropdown-item" name="3" value="14-A">14-A</option>
                             <option class="dropdown-item" name="4" value="18-A">18-A</option>
                             <option class="dropdown-item" name="5" value="R">R</option>
                             </select>
-                    
-                    </div>
-                    <div class="form-group">
-                            <label for="actors">Actors</label>
-                            <input type="text" class="form-control" id="actors" name="actors" placeholder="">
-                    </div>
-                    <!-- drop down -->
-                    <div class="form-group">
-                        <label for="productioncompany">Production Company</label>
-                        <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
-                    </div>
-                    <!-- supplier dropdown -->
-                   <div class="form-group">
-                        <label for="supplier">Supplier</label>
-                        <select class="form-control" name="supplier">
+
+            </div>
+            <div class="form-group">
+              <label for="actors">Actors</label>
+              <input type="text" class="form-control" id="actors" name="actors" placeholder="">
+            </div>
+            <!-- drop down -->
+            <div class="form-group">
+              <label for="productioncompany">Production Company</label>
+              <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
+            </div>
+            <!-- supplier dropdown -->
+            <div class="form-group">
+              <label for="supplier">Supplier</label>
+              <select class="form-control" name="supplier">
                         <?php
                         // add try catch
                             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
@@ -196,33 +119,79 @@
                             }
                             $dbh = null;
 
-                            echo '</select><button type="submit" class="btn btn-primary">Submit</button></form>';
-                    ?>
-                    </div> 
-                </div>
+                         ?>
+
+          </select><button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+          </form>
+
+
+    </div>
+    </div>
+  </div>
+  <!-- /.col-lg-3 -->
+  <div class="col-md-9">
+    <div class="row">
+    <div class="col-md-12">
+    
+      <div class="card card-default">
+        <div class="card-header">Popular</div>
+        <div class="card-body">
+            <div class="row">
+            <div class="col-sm-6">
+              <h4>Popular Movie</h4>
+              <?php
+                                    $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                    $row= $dbh->query("SELECT title, MAX(taken_seats) as popular FROM (SELECT movie_id, SUM(seats_reserved) as taken_seats FROM reserves GROUP BY movie_id) taken INNER JOIN movie ON movie.movie_id=taken.movie_id");
+                                    $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                                    echo '<p id="popular-movie">'.$results[0]['title'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
+                                    $dbh = null;
+                                ?>
             </div>
-        </div>
-        <div class="col-lg-9">
-            <div class="card card-default">
-                <div class="card-header">Customers</div>
-                <div class="card-body">
-                    <form id="customer_table" action="customer_history.php" method="post">
-                    <div class="row">
-                    <table class="table table-hover table-responsive" id="all_customers">
-                        <thead>
-                            <tr>
-                            <th scope="col"></th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Login Id</th>
-                            <th scope="col">Address</th>
-                        
-                            </tr>
-                        </thead>
-                        <tbody>
-                             <?php
+            <div class="col-sm-6">
+              <h4>Popular Theatre Complex</h4>
+              <?php
+                                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                                $row= $dbh->query("SELECT name, MAX(seats) as popular FROM (SELECT name, SUM(seats_reserved) as seats FROM `reserves` GROUP BY name) count_seats");
+                                $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                                echo '<p id="popular-movie">'.$results[0]['name'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
+                                $dbh = null;
+                            ?>
+            </div>
+          </div>
+          </div>
+          </div>
+
+      </div>
+
+
+    <!-- /.row> -->
+  </div>
+
+<!-- /.row> -->
+<br>
+<div class="row">
+    <div class="col-md-12">
+  <div class="card card-default">
+    <div class="card-header">Customers</div>
+    <div class="card-body">
+      <form id="customer_table" action="customer_history.php" method="post">
+        <div class="row">
+          <table class="table table-hover table-responsive" id="all_customers">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Login Id</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <?php
                                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                                 $rows = $dbh->query("select * from customer");
                                 // add try catch
@@ -233,41 +202,29 @@
                                 }
                                 $dbh = null;
                             ?>
-                        </tbody>
-                        </table>
-                        </div>
-                        <div class="btn-group row">
-                            <div class="col-sm-6">
-                                <button type="submit" id="customer-history" class="btn btn-primary">View Purchase History</button>
-                                <!-- On button click, -->
-                            </div>
-                            <div class="col-sm-6">
-                            <button type="button" id="customer-delete" class="btn btn-danger">Delete Account</button>
-                            </div>
-                        </div>
-                        </form>
-
-
-                </div>
-            </div>
+            </tbody>
+          </table>
         </div>
+        <div class="btn-group row">
+          <div class="col-sm-6">
+            <button type="submit" id="customer-history" class="btn btn-primary">View Purchase History</button>
+            <!-- On button click, -->
+          </div>
+          <div class="col-sm-6">
+            <button type="button" id="customer-delete" class="btn btn-danger">Delete Account</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card card-default">
-                <div class="card-header">Edit Showings</div>
-                <div class="card-body"></div>
-            </div>
-
-        </div>
-        <div class="col-lg-6">
-
-        </div>
-    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+    <!-- /.col-lg-9 -->
 </div>
-
-
-
+</div>
+<!-- /.row> -->
+<!-- /. container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

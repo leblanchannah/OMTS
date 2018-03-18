@@ -55,25 +55,27 @@
                     $supplier = $_POST["supplier"];
                     $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                     try {
-                        $stmt = $dbh->prepare("insert into movie values(:title, :director, :length, :plot_synopsis, :actors, :production_company, :supplier_phone_number)");
-                        $stmt->bindParam(':title', $title);    
-                        $stmt->bindParam(':director', $director);    
-                        $stmt->bindParam(':length', $length);
-                        $stmt->bindParam(':plot_synopsis', $plotsynopsis);    
-                        $stmt->bindParam(':actors', $actor);    
-                        $stmt->bindParam(':production_company', $productioncompany);           
-                        $stmt->bindParam(':supplier_phone_number', $suppliernum);  
+                        $stmt = $dbh->prepare("insert into movie (title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+                          values(:title, :director, :length,:rating, :plot_synopsis, :actors, :production_company, :supplier_phone_number)");
                         // insert a row    
-                        $stmt->execute();
+                        if ($stmt->execute(array(':title' => $title, ':director' => $director,':length'=> $length,':rating'=>$rating,':plot_synopsis'=> $plotsynopsis,':actors'=> $actor, ':production_company'=> $productioncompany,':supplier_phone_number'=>$supplier))) {
+                          // success
+                            echo '<div class="alert alert-primary" role="alert">
+                            Movie creation successful, please return to <a href="admin.php">admin homepage</a>!
+                            </div>';
+                          } else {
+                          // failure
+                          echo '<div class="alert alert-danger" role="alert">
+                          Movie creation unsuccessful, please return to <a href="admin.php">admin homepage</a> and try again!
+                          </div>';
+                          }
                         
                     } catch (PDOException $e) {
                      echo '<div class="alert alert-danger" role="alert">
-                          Movie creation unsuccessful, please return to <a href="admin.php">homepage</a> and try again!
+                          Movie creation unsuccessful, please return to <a href="admin.php">admin homepage</a> and try again!
                           </div>';
                     }
-                    echo '<div class="alert alert-primary" role="alert">
-                          Movie creation successful, please return to <a href="admin.php">homepage</a>!
-                          </div>';
+                    
                           $dbh = null;
                 ?>
                 </div>
