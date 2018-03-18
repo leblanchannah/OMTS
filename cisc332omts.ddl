@@ -24,8 +24,6 @@ FOREIGN KEY(name) REFERENCES theatre_complex(name)
 
 CREATE TABLE showing(
 start_time		DATETIME	NOT NULL,
-seats_available			INTEGER	NOT NULL,
-
 movie_id INTEGER NOT NULL,
 
 num				INTEGER		NOT NULL,
@@ -129,7 +127,7 @@ account_number	INTEGER		NOT NULL,
 
 num				INTEGER		NOT NULL,
 name			VARCHAR(50)	NOT NULL,
-start_time		DATE	NOT NULL,
+start_time		DATETIME	NOT NULL,
 movie_id INTEGER NOT NULL,
 
 seats_reserved integer NOT NULL,
@@ -147,21 +145,89 @@ INSERT INTO theatre_complex VALUES (2, "complex_2", "2 Cinema Avenue", "Calgary"
 INSERT INTO theatre_complex VALUES (1, "complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
 
 -- theatre
-INSERT INTO theatre VALUES (1, 10, "S", "complex_1");
-INSERT INTO theatre VALUES (2, 15, "M", "complex_1");
-INSERT INTO theatre VALUES (3, 25, "L", "complex_1");
+INSERT INTO theatre VALUES (1, 100, "S", "complex_1");
+INSERT INTO theatre VALUES (2, 150, "M", "complex_1");
+INSERT INTO theatre VALUES (3, 250, "L", "complex_1");
 
-INSERT INTO theatre VALUES (1, 10, "S", "complex_2");
-INSERT INTO theatre VALUES (2, 20, "M", "complex_2");
+INSERT INTO theatre VALUES (1, 100, "S", "complex_2");
+INSERT INTO theatre VALUES (2, 200, "M", "complex_2");
+INSERT INTO theatre VALUES (3, 100, "S", "complex_2");
+INSERT INTO theatre VALUES (4, 200, "M", "complex_2");
 
-INSERT INTO theatre VALUES (1, 13, "S", "complex_3");
+INSERT INTO theatre VALUES (1, 100, "S", "complex_3");
+INSERT INTO theatre VALUES (2, 100, "S", "complex_3");
+INSERT INTO theatre VALUES (3, 100, "S", "complex_3");
+INSERT INTO theatre VALUES (4, 200, "M", "complex_3");
+INSERT INTO theatre VALUES (5, 200, "M", "complex_3");
+INSERT INTO theatre VALUES (6, 300, "L", "complex_3");
 
 -- showing
-INSERT INTO showing VALUES ("2018-03-23", 10, 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23", 15, 2, 2, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23", 10, 3, 1, "complex_3");
-INSERT INTO showing VALUES ("2222-08-05", 10, 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2222-08-05", 14, 2, 2, "complex_2");
+-- made seats avaiable into an attribute that is derived on front end
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 3, 3, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 4, 4, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 5, 5, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 6, 6, "complex_1");
+
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 5, 3, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 6, 4, "complex_2");
+
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_3");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_3");
+INSERT INTO showing VALUES ("2018-03-23 19:00:00", 3, 3, "complex_3");
+
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 3, 3, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 4, 4, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 5, 5, "complex_1");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 6, 6, "complex_1");
+
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 5, 3, "complex_2");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 6, 4, "complex_2");
+
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_3");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_3");
+INSERT INTO showing VALUES ("2018-03-23 21:00:00", 3, 3, "complex_3");
+
+
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 3, 3, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 4, 4, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 5, 5, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 6, 6, "complex_1");
+
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 5, 3, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 6, 4, "complex_2");
+
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_3");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_3");
+INSERT INTO showing VALUES ("2018-03-24 19:00:00", 3, 3, "complex_3");
+
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 3, 3, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 4, 4, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 5, 5, "complex_1");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 6, 6, "complex_1");
+
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 5, 3, "complex_2");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 6, 4, "complex_2");
+
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_3");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_3");
+INSERT INTO showing VALUES ("2018-03-24 21:00:00", 3, 3, "complex_3");
+
 
 -- movie
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
@@ -170,12 +236,29 @@ INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, produc
 VALUES ("RECURSION RECURSION", "Hann Leblank", 2.5, "R", "Recursive. Recursion", "Gal_1", "Her house", 3859481728);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
 VALUES ("Another Fun Movie", "Hann Leblank", 1.78, "R", "This one is better.", "Gal_1,Dude_1", "Her house", 6472945648);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("The Shawshank Redemption", "Frank Darabont", 142, "R", "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", " Tim Robbins, Morgan Freeman, Bob Gunton", "Castle Rock Entertainment", 6472945648);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("The Godfather", "Francis Ford Coppola", 175, "R", "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", "Marlon Brando, Al Pacino, James Caan", "Paramount Pictures", 6472945648);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("The Dark Knight", "Christopher Nolan", 152, "R", "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham, the Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "Christian Bale, Heath Ledger, Aaron Eckhart", "Warner Bros.", 6472945648);
 
 -- playing
-INSERT INTO playing VALUES ("2018-03-24", "2021-06-15", "complex_1", 1);
-INSERT INTO playing VALUES ("2018-03-24", "2021-06-15", "complex_2", 2);
-INSERT INTO playing VALUES ("2018-03-24", "2021-06-15", "complex_3", 2);
-INSERT INTO playing VALUES ("2018-03-24", "2021-06-15", "complex_3", 3);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 1);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 2);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 3);
+
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 1);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 2);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 5);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 6);
+
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 1);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 2);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 3);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 4);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 5);
+INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 6);
 
 -- supplier
 INSERT INTO supplier VALUES ("supplier_1", "1234 Supplier Road", "Vancouver", "F8Y8U9", 9586748590, "person name");
@@ -189,6 +272,15 @@ INSERT INTO customer(fname, lname, phone_number, password, login_id, email, stre
 VALUES ("Christopher", "Ko", 4164164166, "WHAT", "chrissycakez", "chris.ko@queensu.ca", "400 Byward Street", "Kingston", "W3K779", "2222222222222222", "2021-08-00");
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
 VALUES ("Alfred", "Chen", 7897897899, "UP", "alfredlixi", "alfred.chen@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333333333333", "2021-07-00");
+INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
+VALUES ("test4fname", "test4lname", 123123456, "test4", "test4", "test4@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399933333", "2021-07-00");
+INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
+VALUES ("test1fname", "test1lname", 123123456, "test1", "test1", "test1@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333333", "2021-07-00");
+INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
+VALUES ("test2fname", "test2lname", 123723456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333303", "2021-07-00");
+INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
+VALUES ("test3fname", "test3lname", 193123456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3343333399333333", "2021-07-00");
+
 
 -- admin
 INSERT INTO admin(fname, lname, phone_number, password, login_id, email, street, city, postal_code, admin_flag)
@@ -205,8 +297,25 @@ INSERT INTO reviews VALUES ("This movie just kept repeating the first 15 minutes
 INSERT INTO reviews VALUES ("Would watch again.", 1, 1);
 INSERT INTO reviews VALUES ("5/5", 3, 2);
 
+INSERT INTO reviews VALUES ("I have never seen such an amazing film since I saw The Shawshank Redemption. Shawshank encompasses friendships, hardships, hopes, and dreams. And what is so great about the movie is that it moves you, it gives you hope. Even though the circumstances between the characters and the viewers are quite different, you don't feel that far removed from what the characters are going through.",4,4);
+INSERT INTO reviews VALUES ("Tell me a movie that is more famous than this. Tell me a movie that has had more parodies spinned off its storyline than this. Tell me one movie that has been as quoted as a much as this. The answer is you can't. No movie has had as much of an impact as The Godfather has had ever since it was released.",5,4);
+INSERT INTO reviews VALUES ("We've been subjected to enormous amounts of hype and marketing for the Dark Knight. We've seen Joker scavenger hunts and one of the largest viral campaigns in advertising history and it culminates with the actual release of the movie. Everything that's been said is pretty much spot on. This is the first time I can remember where a summer blockbuster film far surpasses the hype.For as much action as there is in this movie, it's the acting that makes it a great piece of work. Between all the punches, explosions and stunt-work is some great dialog work. All the actors have their moments.",6,4);
+
+
 -- reserves
-INSERT INTO reserves VALUES (1, 1, "complex_3", "2018-03-24", 1, 1, "2018-03-02", false);
-INSERT INTO reserves VALUES (2, 1, "complex_3", "2018-03-24", 1, 1, "2018-03-02", false);
-INSERT INTO reserves VALUES (3, 1, "complex_3", "2018-03-24", 1, 1, "2018-03-02", false);
-INSERT INTO reserves VALUES (2, 1, "complex_2", "2018-03-24", 2, 1, "2018-03-02", false);
+-- account, num, name, start time, movie_id,seats_reserved,booking_time,cancel_flag,
+INSERT INTO reserves VALUES (1, 1, "complex_3", "2018-03-23 19:00:00", 1, 11, "2018-03-20 12:00:00", false);
+INSERT INTO reserves VALUES (2, 3, "complex_2", "2018-03-23 19:00:00", 5, 3, "2018-03-20 12:00:02", false);
+INSERT INTO reserves VALUES (3, 1, "complex_3", "2018-03-23 19:00:00", 1, 5, "2018-03-20 12:00:04", false);
+INSERT INTO reserves VALUES (2, 2, "complex_2", "2018-03-23 19:00:00", 2, 6, "2018-03-20 12:00:33", false);
+
+INSERT INTO reserves VALUES (4, 4, "complex_1", "2018-03-23 19:00:00", 4, 1, "2018-03-20 12:00:00", false);
+INSERT INTO reserves VALUES (2, 5, "complex_1", "2018-03-23 21:00:00", 5, 1, "2018-03-20 13:00:00", true);
+INSERT INTO reserves VALUES (3, 2, "complex_2", "2018-03-23 19:00:00", 2, 1, "2018-03-20 14:00:00", false);
+INSERT INTO reserves VALUES (2, 4, "complex_1", "2018-03-23 21:00:00", 4, 1, "2018-03-20 15:00:00", false);
+
+INSERT INTO reserves VALUES (5, 3, "complex_3", "2018-03-23 19:00:00", 3, 2, "2018-03-20 15:00:00", false);
+INSERT INTO reserves VALUES (6, 1, "complex_3", "2018-03-23 19:00:00", 1, 2, "2018-03-20 13:00:00", false);
+INSERT INTO reserves VALUES (3, 2, "complex_2", "2018-03-23 21:00:00", 2, 2, "2018-03-20 9:00:00", false);
+INSERT INTO reserves VALUES (2, 6, "complex_1", "2018-03-23 19:00:00", 6, 2, "2018-03-20 2:00:00", false);
+
