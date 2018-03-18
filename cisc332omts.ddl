@@ -140,14 +140,17 @@ FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCAD
 );
 
 --  theatre complex
-INSERT INTO theatre_complex VALUES (3, "complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
-INSERT INTO theatre_complex VALUES (2, "complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
-INSERT INTO theatre_complex VALUES (1, "complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
+INSERT INTO theatre_complex VALUES (6, "complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
+INSERT INTO theatre_complex VALUES (4, "complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
+INSERT INTO theatre_complex VALUES (3, "complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
 
 -- theatre
 INSERT INTO theatre VALUES (1, 100, "S", "complex_1");
 INSERT INTO theatre VALUES (2, 150, "M", "complex_1");
 INSERT INTO theatre VALUES (3, 250, "L", "complex_1");
+INSERT INTO theatre VALUES (4, 200, "M", "complex_1");
+INSERT INTO theatre VALUES (5, 200, "M", "complex_1");
+INSERT INTO theatre VALUES (6, 300, "L", "complex_1");
 
 INSERT INTO theatre VALUES (1, 100, "S", "complex_2");
 INSERT INTO theatre VALUES (2, 200, "M", "complex_2");
@@ -157,76 +160,23 @@ INSERT INTO theatre VALUES (4, 200, "M", "complex_2");
 INSERT INTO theatre VALUES (1, 100, "S", "complex_3");
 INSERT INTO theatre VALUES (2, 100, "S", "complex_3");
 INSERT INTO theatre VALUES (3, 100, "S", "complex_3");
-INSERT INTO theatre VALUES (4, 200, "M", "complex_3");
-INSERT INTO theatre VALUES (5, 200, "M", "complex_3");
-INSERT INTO theatre VALUES (6, 300, "L", "complex_3");
+
 
 -- showing
--- made seats avaiable into an attribute that is derived on front end
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 3, 3, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 4, 4, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 5, 5, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 6, 6, "complex_1");
 
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 5, 3, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 6, 4, "complex_2");
-
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 1, 1, "complex_3");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 2, 2, "complex_3");
-INSERT INTO showing VALUES ("2018-03-23 19:00:00", 3, 3, "complex_3");
-
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 3, 3, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 4, 4, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 5, 5, "complex_1");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 6, 6, "complex_1");
-
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 5, 3, "complex_2");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 6, 4, "complex_2");
-
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 1, 1, "complex_3");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 2, 2, "complex_3");
-INSERT INTO showing VALUES ("2018-03-23 21:00:00", 3, 3, "complex_3");
-
-
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 3, 3, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 4, 4, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 5, 5, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 6, 6, "complex_1");
-
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 5, 3, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 6, 4, "complex_2");
-
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 1, 1, "complex_3");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 2, 2, "complex_3");
-INSERT INTO showing VALUES ("2018-03-24 19:00:00", 3, 3, "complex_3");
-
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 3, 3, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 4, 4, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 5, 5, "complex_1");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 6, 6, "complex_1");
-
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 5, 3, "complex_2");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 6, 4, "complex_2");
-
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 1, 1, "complex_3");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 2, 2, "complex_3");
-INSERT INTO showing VALUES ("2018-03-24 21:00:00", 3, 3, "complex_3");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 1, 1, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 2, 2, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 3, 3, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 4, 4, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 5, 5, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 6, 6, "complex_1");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 1, 1, "complex_2");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 2, 2, "complex_2");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 5, 3, "complex_2");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 6, 4, "complex_2");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 1, 1, "complex_3");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 2, 2, "complex_3");
+INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:00", 3, 3, "complex_3");
 
 
 -- movie
@@ -244,21 +194,20 @@ INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, produc
 VALUES ("The Dark Knight", "Christopher Nolan", 152, "R", "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham, the Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "Christian Bale, Heath Ledger, Aaron Eckhart", "Warner Bros.", 6472945648);
 
 -- playing
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 1);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 2);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_1", 3);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 1);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 2);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 3);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 4);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 5);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 6);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_2", 1);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_2", 2);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_2", 5);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_2", 6);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_3", 1);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_3", 2);
+INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_3", 3);
 
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 1);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 2);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 5);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_2", 6);
-
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 1);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 2);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 3);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 4);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 5);
-INSERT INTO playing VALUES ("2018-03-24", "2018-06-15", "complex_3", 6);
 
 -- supplier
 INSERT INTO supplier VALUES ("supplier_1", "1234 Supplier Road", "Vancouver", "F8Y8U9", 9586748590, "person name");
@@ -310,12 +259,12 @@ INSERT INTO reserves VALUES (3, 1, "complex_3", "2018-03-23 19:00:00", 1, 5, "20
 INSERT INTO reserves VALUES (2, 2, "complex_2", "2018-03-23 19:00:00", 2, 6, "2018-03-20 12:00:33", false);
 
 INSERT INTO reserves VALUES (4, 4, "complex_1", "2018-03-23 19:00:00", 4, 1, "2018-03-20 12:00:00", false);
-INSERT INTO reserves VALUES (2, 5, "complex_1", "2018-03-23 21:00:00", 5, 1, "2018-03-20 13:00:00", true);
+INSERT INTO reserves VALUES (2, 5, "complex_1", "2018-03-23 19:00:00", 5, 1, "2018-03-20 13:00:00", true);
 INSERT INTO reserves VALUES (3, 2, "complex_2", "2018-03-23 19:00:00", 2, 1, "2018-03-20 14:00:00", false);
-INSERT INTO reserves VALUES (2, 4, "complex_1", "2018-03-23 21:00:00", 4, 1, "2018-03-20 15:00:00", false);
+INSERT INTO reserves VALUES (2, 4, "complex_1", "2018-03-23 19:00:00", 4, 1, "2018-03-20 15:00:00", false);
 
 INSERT INTO reserves VALUES (5, 3, "complex_3", "2018-03-23 19:00:00", 3, 2, "2018-03-20 15:00:00", false);
 INSERT INTO reserves VALUES (6, 1, "complex_3", "2018-03-23 19:00:00", 1, 2, "2018-03-20 13:00:00", false);
-INSERT INTO reserves VALUES (3, 2, "complex_2", "2018-03-23 21:00:00", 2, 2, "2018-03-20 9:00:00", false);
+INSERT INTO reserves VALUES (4, 2, "complex_2", "2018-03-23 19:00:00", 2, 2, "2018-03-20 9:00:00", false);
 INSERT INTO reserves VALUES (2, 6, "complex_1", "2018-03-23 19:00:00", 6, 2, "2018-03-20 2:00:00", false);
 

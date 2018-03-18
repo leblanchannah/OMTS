@@ -1,4 +1,5 @@
 <!doctype html>
+<?php include 'adminnavbar.php'?>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -15,27 +16,6 @@
     <!--https://bootsnipp.com/snippets/featured/login-and-register-tabbed-form -->
     <!-- Custom styles for this template -->
     <link href="customer.css" rel="stylesheet">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-            <a class="navbar-brand" href="admin.php">OMTS</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                  <a class="nav-link" data-toggle="tooltip" title="Home" href="admin.php">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" data-toggle="tooltip" title="Browse Movies, Make Reservations" href="#">Browse Movies <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" data-toggle="tooltip" title="View or cancel purchases" href="#">View Purchases <span class="sr-only">(current)</span></a>
-                </li>
-    
-              </ul>
-            </div>
-          </nav>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
     </script>
   </head>
