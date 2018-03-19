@@ -28,8 +28,9 @@ print_r($_POST);
 $errorMessage = "error";
 
 if (isset($_POST) && !empty($_POST)) {
-    $start_time = $_POST["datepicker"]; 
+    //$start_time =strtotime($_POST["datepicker"]);
     $movie = $_POST["moviename"];
+    $start_time =$_POST["datepicker"];
     $complex = $_POST["tcomplex"];
     $theatre_num = $_POST["theatres"];
     $old_start_time = $_POST["oldtime"]; 
@@ -41,25 +42,20 @@ if (isset($_POST) && !empty($_POST)) {
         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
         // set the PDO error mode to exception
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
-        //$sql = "UPDATE showing SET start_time=:time, movie_id=:movie, num=:tnum, name=:tcomplex WHERE movie_id=:movie AND start_time=:oldstart AND num=:oldnum AND name:=oldname";
-    
-        // Prepare statement
-        //$stmt = $conn->prepare($sql);
-    
-        // execute the query
-       // $stmt->execute();
-    
-        // echo a message to say the UPDATE succeeded
-        //echo $stmt->rowCount() . " records UPDATED successfully";
-       // }
-    
+        $stmt = $dbh->prepare("UPDATE showing SET start_time=:stime, num=:tnum, name=:tcomplex WHERE movie_id=:movie AND start_time=:oldstart AND num=:oldnum AND name=:oldname");
+        if ($stmt->execute(array(':stime' =>$start_time,':movie'=>$movie,':tnum'=>$theatre_num,':tcomplex'=>$complex,':oldstart'=>$old_start_time,':oldnum'=>$old_theatre_num, ':oldname'=>$old_complex))) {
+        // success
+            echo '<div class="alert alert-primary" role="alert">Movie creation successful, please return to <a href="admin.php">admin homepage</a>!</div>';
+        } else {
+        // failure
+            echo '<div class="alert alert-danger" role="alert">Movie creation unsuccessful, please return to <a href="admin.php">admin homepage</a> and try again!</div>';
+        }
     } catch (PDOException $e) {
-        echo $errorMessage;
+        echo '<div class="alert alert-danger" role="alert">Movie creation unsuccessful, please return to <a href="admin.php">admin homepage</a> and try again!</div>';
     }
     $dbh = null;
 } else {
-    echo $errorMessage;
+    echo '<div class="alert alert-danger" role="alert">Movie creation unsuccessful, please return to <a href="admin.php">admin homepage</a> and try again!</div>';
 }
 ?>
 

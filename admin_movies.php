@@ -37,7 +37,10 @@ $(document).ready(function () {
                 }
             }
         });
-        $('#datetimepicker6').datetimepicker();
+        $('#datetimepicker6').datetimepicker({
+          inline: true,
+          sideBySide: true
+        });
 
     $( "#tcomplex" ).change(function() {
         $.ajax({
@@ -83,13 +86,12 @@ $(document).ready(function () {
                   <tbody>
                     <?php
                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                        $rows = $dbh->query('SELECT theatre_complex, theatre_num, title, start_time, seats_available, movie.movie_id FROM (SELECT theatre_complex, theatre_num, start_time, movie_id, (max_seats-seats) as seats_available FROM (SELECT num as theatre_num, name as theatre_complex, movie_id, start_time, SUM(seats_reserved) as seats FROM reserves GROUP BY num,name,movie_id,start_time) booked INNER JOIN theatre ON theatre.num = theatre_num AND theatre_complex = theatre.name) seats_left INNER JOIN movie ON movie.movie_id = seats_left.movie_id');
+                        //SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name =theatre.name;
+                        $rows = $dbh->query('SELECT title, name, num, start_time, avail,movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id');
                         foreach($rows as $row) {
-                            echo '<tr><td><div class="radio"><label><input type="radio"" id="movie" name="moviename" value="'
-                            .$row[5].'"></label></div></td><td>'.$row[2].'</td><td>'.$row[0].'</td><td>'.$row[1].
-                            '</td><td>'.$row[3].'</td><td>'.$row[4].'</td>'.
-                            '<input type="hidden" name="oldcomplex" value="'.$row[0].'"/>'.
-                            '<input type="hidden" name="oldnum" value="'.$row[1].'"/>'.
+                            echo '<tr><td><div class="radio"><label><input type="radio"" id="movie" name="moviename" value="'.$row[5].'"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].
+                            '</td><td>'.$row[3].'</td><td>'.$row[4].'</td>'.'<input type="hidden" name="oldcomplex" value="'.$row[1].'"/>'.
+                            '<input type="hidden" name="oldnum" value="'.$row[2].'"/>'.
                             '<input type="hidden" name="oldtime" value="'.$row[3].'"/>'.
                             '<input type="hidden" name="movie_id" value="'.$row[5].'"/>'.
                             '</tr>';
