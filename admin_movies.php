@@ -33,14 +33,12 @@ $(document).ready(function () {
             success:function(data) {
                 if (data != "error") {
                     $('#theatres').html(data)
+                    $('#theatres2').html(data)
                 } else {    
                 }
             }
         });
-        $('#datetimepicker6').datetimepicker({
-          inline: true,
-          sideBySide: true
-        });
+
 
     $( "#tcomplex" ).change(function() {
         $.ajax({
@@ -50,6 +48,20 @@ $(document).ready(function () {
             success:function(data) {
                 if (data != "error") {
                     $('#theatres').html(data)
+                } else {    
+                }
+            }
+        });
+    });
+
+    $( "#tcomplex2" ).change(function() {
+        $.ajax({
+            type: 'post',
+            url: 'get_theatre.php',
+            data: $('#add_showing').serialize(),
+            success:function(data) {
+                if (data != "error") {
+                    $('#theatres2').html(data)
                 } else {    
                 }
             }
@@ -65,9 +77,65 @@ $(document).ready(function () {
 <!-- load table with current showings, in asc order, highlight movies no longer playing with red -->
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+
+  </div>
+  <br>
+  <div class="row">
+  <div class="col-md-4">
+    <div class="card card-default">
+        <div class="card-header">Add Showing</div>
+        <div class="card-body">
+          <form id="add_showing" method="post" action="add_movie_showing.php">
+          <div class="form-group col-sm-12">
+            <label for="tcomplex2">Theatre Complex</label>
+            <select class="form-control" name="tcomplex2" id="tcomplex2">
+                    <?php
+                    // add try catch
+                        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                        $rows = $dbh->query('select name from theatre_complex');
+
+                        foreach($rows as $row) {
+                            echo '<option class="dropdown-item" name="theatrecomplex2" value="'.$row[0].'">'.$row[0].'</option>';
+                        }
+                        $dbh = null;
+
+                    ?>
+            </select>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="theaters2">Theatre Number</label>
+                <select class="form-control" name="theatres2" id="theatres2">
+                </select>
+            </div>
+            <div class="form-group col-sm-12">
+                <label for="theaters2">Available Movies</label>
+                <select class="form-control" name="movies" id="movies">
+                <?php
+                    // add try catch
+                        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                        $rows = $dbh->query('select title,movie_id from movie');
+
+                        foreach($rows as $row) {
+                            echo '<option class="dropdown-item" name="movie" value="'.$row[1].'">'.$row[0].'</option>';
+                        }
+                        $dbh = null;
+
+                    ?>
+                </select>
+            </div>
+            <div class="form-group col-sm-12">
+              <label for="datepickeradd">Start Time (YYYY-MM-DD HH:MM)</label>
+              <input type="text" class="form-control" name="datepickeradd" id="datepickeradd"/>
+            </div>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Add Showing">
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
       <div class="card card-default">
-        <div class="card-header">Showings</div>
+        <div class="card-header">Edit Showings</div>
         <div class="card-body">
           <div class="row">
             <div class="col-md-12">
@@ -124,8 +192,8 @@ $(document).ready(function () {
                 </select></div>
 
                 <div class="col-sm-6">
-                    <label for="datepicker">Start Time</label>
-                    <input type="text" class="form-control datetimepicker-input" name="datepicker" id="datetimepicker5" data-toggle="datetimepicker" data-target="#datetimepicker5"/>
+                    <label for="datepicker">Start Time (YYYY-MM-DD HH:MM)</label>
+                    <input type="text" class="form-control" name="datepicker" id="datepicker" />
                 </div>
                 <br>
                 <input class="btn btn-primary" type="submit" value="Edit Showing">
