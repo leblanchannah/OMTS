@@ -36,11 +36,37 @@
   ?>
       <div class="col-md-9">
         <div class="card card-default">
-          <div class="card-header">What's Playing</div>
+          <div class="card-header">Select a Theatre Complex</div>
 
           <div class="card-body">
-            <form action='make_reservation.php' method='post'>
-              <table class="table table-hover">
+          <form action='make_reservation.php' method='post'>
+            <?php
+              $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+              $rows = $dbh->query("SELECT c.name, c.street, c.city, c.postal_code, c.phone_number FROM theatre_complex c");
+              echo '<div class="row">';
+              foreach($rows as $row) {
+                      echo '<div class="col-sm-6">'.
+                        '<div class="card mb-4">'.
+                          '<div class="card-body">'.
+                            '<h5 class="card-title">'.$row['name'].'</h5>'.
+                            '<p class="card-text">'.$row['street'].'</p>'.
+                            '<p class="card-text">'.$row['city'].'</p>'.
+                            '<p class="card-text">'.$row['postal_code'].'</p>'.
+                            '<p class="card-text">'.$row['phone_number'].'</p>'.
+                            '<button type="submit" name="selected_theatre_complex" id="selected_theatre_complex" value='.$row['name'].' class="btn btn-primary">Select Theatre</button>'.
+                          '</div>'.
+                        '</div>'.
+                      '</div>';
+                    }
+                    echo '</div>';
+            ?>
+            <!-- <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button> -->
+
+
+
+
+            <!-- <form action='make_reservation.php' method='post'> -->
+              <!-- <table class="table table-hover">
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -74,10 +100,10 @@
                 $dbh = null;
               ?>
                 </tbody>
-              </table>
-              <div class="btn-group">
+              </table> -->
+              <!-- <div class="btn-group">
                 <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>
-              </div>
+              </div> -->
             </form>
           </div>
 
