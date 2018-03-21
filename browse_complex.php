@@ -39,7 +39,7 @@
           <div class="card-header">Select a Theatre Complex</div>
 
           <div class="card-body">
-          <form action='make_reservation.php' method='post'>
+          <form action='showings_by_complex.php' method='post'>
             <?php
               $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
               $rows = $dbh->query("SELECT c.name, c.street, c.city, c.postal_code, c.phone_number FROM theatre_complex c");

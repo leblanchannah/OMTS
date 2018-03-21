@@ -92,14 +92,18 @@
                 $theatre_complex = $_POST['selected_theatre_complex'];
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
+                // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
+                $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE name =".'"'.$theatre_complex.'"');
                 foreach($rows as $row) {
+                  // num, name, start_time, movie_id
+                  $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
                   if ($date <= $row["start_time"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['movie_id']."'></label></div></td>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$multi_key."'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
                     echo "<td>".$row["num"]."</td>";
                     echo "<td>".$row["start_time"]."</td>";
+                    echo "<td>".$row["avail"]."</td>";
                     echo "</tr>";
                   }
                 }
@@ -107,6 +111,7 @@
               ?>
                 </tbody>
               </table>
+              <input class="btn btn-primary" type="submit" value="Select Showing">
             </form>
           </div>
           </div>
