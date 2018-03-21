@@ -198,7 +198,8 @@
                                         $rows = $dbh->query('select * from theatre where name="complex_1"');
                                         foreach($rows as $row) {
                                             echo '<tr><td><div class="radio"><label><input type="radio"" id="check" name="complex_name" value="complex_1"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td></tr>';
-                                        }?>
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
                             <button type="button" id="del_theatre" class="btn btn-danger" disabled>Delete Theatre</button>
