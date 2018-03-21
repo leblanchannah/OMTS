@@ -20,31 +20,78 @@
 
     <link href="customer.css" rel="stylesheet">
     <script>
+    $(document).ready(function () {
        $( "#theatresfromc input:radio" ).prop("checked", true);
 
-
-
         $( "#tcomplex5" ).change(function() {
-            console.log("caught change");
+
             $.ajax({
                 type: 'post',
                 url: 'theatre_table_admin.php',
                 data: $('#theatresfromc').serialize(),
                 success:function(data) {
                     if (data != "error") {
-                        
                         $('#theatrest').html(data)
-                    } else {    
+                        $( "#theatresfromc input:radio" ).prop("checked", true);
                     }
                 }
             });
         });
 
+        $('#modal_div').on('shown.bs.modal', function () {
+            comp = $("#complexes input[type='radio']:checked").val();
+             $('.modal-title').text('Edit '+comp);
+             $('#myInput').trigger('focus');
+             oldcomp = '<div class="form-group"><input type="hidden" class="form-control" id="oldcomp" name="oldcomplex" value="'+comp+'"></div>'
+             $('#edit_complex_f').append(oldcomp);
+        });
+
+
+    });
 
     </script>
   </head>
   <body>
     <div class="container">
+        <div class="row">
+        <div class="modal" tabindex="-1" role="dialog" id="modal_div">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalc">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_complex_f" method="post" action="edit_complex.php"> 
+                    <div class="form-group">
+                        <label for="cname">Name</label>
+                        <input type="text" class="form-control" id="e_name" name="cname" placeholder="">
+                    </div>       
+                    <div class="form-group">
+                        <label for="cstreet">Address</label>
+                        <input type="text" class="form-control" id="e_cstreet" name="cstreet" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ccity">City</label>
+                        <input type="text" class="form-control" id="e_ccity" name="ccity" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ccode">Postal Code</label>
+                        <input type="text" class="form-control" id="e_ccode" name="ccode" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnumber">Phone Number</label>
+                        <input type="text" class="form-control" id="e_cnumber" name="cnumber" placeholder="">
+                    </div>
+                    <button type="submit" id="edit_complex_s" class="btn btn-warning">Update</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
         <div class="row">
         <div class="col-md-4">
             <div class="card card-default">
@@ -73,7 +120,7 @@
                                 <label for="cnumber">Phone Number</label>
                                 <input type="text" class="form-control" id="input_cnumber" name="cnumber" placeholder="">
                             </div>
-                            <button type="button" id="add_complex" class="btn btn-success">Add Complex</button>
+                            <button type="submit" id="add_complex" class="btn btn-success">Add Complex</button>
                         </form>
                         </div>
                     </div>
@@ -86,7 +133,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <form>
+                                <form id="complexes">
                                 <table class="table table-hover table-responsive">
                                     <thead>
                                         <tr>
@@ -102,8 +149,10 @@
                                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                                             $rows = $dbh->query('SELECT * FROM theatre_complex');
                                             foreach($rows as $row) {
-                                                echo '<tr><td><div class="radio"><label><input type="radio"" id="customers" name="complex" value='.$row[1].'></label></div></td><td>'.$row[1].'</td><td>'.$row[0].
-                                                '</td><td>'.$row[2].', '.$row[3].', '.$row[4].'</td><td>'.$row[5].'</td></tr>';
+                                                echo '<tr><td><div class="radio"><label><input type="radio" id="customers" name="complex" value='.$row[1].'></label>'.
+                                                '</td></div></td><td>'.$row[1].'</td><td>'.$row[0].
+                                                '</td><td>'.$row[2].', '.$row[3].', '.$row[4].'</td><td>'.$row[5].'</td><td>'.
+                                             '</tr>';
                                             }
                                             $dbh = null;
                                         ?>
@@ -111,7 +160,7 @@
 
                                 </table>
                                 <button type="button" id="del_complex" class="btn btn-danger" disabled>Delete Theatre</button>
-                            <button type="button" id="edit_complex" class="btn btn-warning">Edit Theatre</button>
+                                <button type="button" id="edit_complex" class="btn btn-warning" data-toggle="modal" data-target="#modal_div">Edit Theatre</button>
                              </form>
                             </div>
                         </div>
@@ -131,7 +180,7 @@
                         <div class="col-md-12">
                         <form id="AddTheatre" method="post" action="add_theatre.php">
                             <div  class="form-group">   
-                            <label for="size">Size</label>
+                            <label for="size">Screen Size</label>
                             <select class="form-control" id="addsize" name="size">
                                 <option class="dropdown-item" name="1" value="S">S</option>
                                 <option class="dropdown-item" name="2" value="M">M</option>
@@ -155,7 +204,11 @@
                                 <label for="addseats">Number of Seats</label>
                                 <input type="text" class="form-control" id="addseats" name="addseats" placeholder="">
                             </div>
-                            <button type="button" id="add_theatre" class="btn btn-success">Add Theatre</button>
+                            <div class="form-group">
+                                <label for="number">Theatre Number</label>
+                                <input type="text" class="form-control" id="number" name="number" placeholder="">
+                            </div>
+                            <button type="submit" id="add_theatre" class="btn btn-success">Add Theatre</button>
                         </form>
                         </div>
                     </div>
