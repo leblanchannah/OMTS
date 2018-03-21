@@ -60,50 +60,6 @@
                     }
                     echo '</div>';
             ?>
-            <!-- <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button> -->
-
-
-
-
-            <!-- <form action='make_reservation.php' method='post'> -->
-              <!-- <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Movie Title</th>
-                    <th scope="col">Theatre Complex</th>
-                    <th scope="col">Street</th>
-                    <th scope="col">City</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                date_default_timezone_set('America/Toronto');
-                $timezone = date_default_timezone_get();
-                // echo "The current server timezone is: " . $timezone;
-                $date = date('Y-m-d');
-
-                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select m.title, p.name, c.street, c.city, p.start_date, p.end_date, m.movie_id from playing p, theatre_complex c join movie m where p.movie_id = m.movie_id and p.name = c.name");
-                foreach($rows as $row) {
-                  if ($date >= $row["start_date"] && $date <= $row["end_date"]) { // only displaying showings that are active
-                    echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['movie_id']."'></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
-                    echo "<td>".$row["name"]."</td>";
-                    echo "<td>".$row["street"]."</td>";
-                    echo "<td>".$row["city"]."</td>";
-                    echo "</tr>";
-                  }
-                }
-                $dbh = null;
-              ?>
-                </tbody>
-              </table> -->
-              <!-- <div class="btn-group">
-                <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>
-              </div> -->
             </form>
           </div>
 

@@ -56,33 +56,27 @@
       </div>
       <div class="col-md-9">
         <div class="card card-default">
-        <?php
-            if (isset($_POST['ReserveButton'])) {
-              if(isset($_POST['optradio']))
-              {
-              // echo "You have selected:" .$_POST['optradio'];
-              $movie_id = $_POST['optradio'];
-              }
-          }
-          $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-          $rows = $dbh->query("select m.title, m.length, m.rating, m.plot_synopsis, m.actors, m.director, m.production_company from movie m where m.movie_id = $movie_id");
-          foreach($rows as $row) {
-            // print_r($row);
-            echo '<div class="card-header">'.$row['title'].' ('.$row['length'].' mins) - '.$row['rating'].'</div>';
-              echo '<div class="card-body">';
-              echo $row['plot_synopsis'].'<br>';
-              echo $row['production_company'].'<br>';
-              echo $row['director'].'<br>';
-              echo $row['actors'].'<br>';
-        }
-        ?>
+          <div class="card-header"><?php echo $_POST['selected_theatre_complex'] ?></div>
+          <div class="card-body">
+          <?php
+            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+            $rows = $dbh->query('SELECT * FROM theatre_complex c WHERE c.name ='.'"'.$_POST['selected_theatre_complex'].'"');
+            foreach($rows as $row) {
+              echo $row['street'].'<br>';
+              echo $row['city'].'<br>';
+              echo $row['postal_code'].'<br>';
+              echo $row['phone_number'].'<br>';
+            }
+
+            $dbh = null;
+          ?>
+
             <form action='make_reservation.php' method='post'>
               <table class="table table-hover">
                 <thead>
                   <tr>
                   <th scope="col"></th>
                         <th scope="col">Movie</th>
-                        <th scope="col">Theatre Complex</th>
                         <th scope="col">Theatre</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">Seats Available</th>
@@ -90,40 +84,31 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
-                    if (isset($_POST['ReserveButton'])) {
-                      if(isset($_POST['optradio']))
-                      {
-                      // echo "You have selected:" .$_POST['optradio'];
-                      $movie_id = $_POST['optradio'];
-                      }
-                  }
-                    date_default_timezone_set('America/Toronto');
-                    $timezone = date_default_timezone_get();
-                    // echo "The current server timezone is: " . $timezone;
-                    $date = date('Y-m-d');
+                <?php
+                date_default_timezone_set('America/Toronto');
+                $timezone = date_default_timezone_get();
+                $date = date('Y-m-d');
 
-                    $rows = $dbh->query("SELECT title, name, num, start_time, avail,movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE movie.movie_id = $movie_id");
+                $theatre_complex = $_POST['selected_theatre_complex'];
+
+                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
                 foreach($rows as $row) {
                   if ($date <= $row["start_time"]) { // only displaying showings that are active
-
-                  echo '<tr><td><div class="radio"><label><input type="radio"" id="movie" name="moviename" value="'.$row[5].'"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].
-                  '</td><td>'.$row[3].'</td><td>'.$row[4].'</td>'.'<input type="hidden" name="oldcomplex" value="'.$row[1].'"/>'.
-                  '<input type="hidden" name="oldnum" value="'.$row[2].'"/>'.
-                  '<input type="hidden" name="oldtime" value="'.$row[3].'"/>'.
-                  '<input type="hidden" name="movie_id" value="'.$row[5].'"/>'.
-                  '</tr>';
+                    echo "<tr>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['movie_id']."'></label></div></td>";
+                    echo "<td>".$row["title"]."</td>";
+                    echo "<td>".$row["num"]."</td>";
+                    echo "<td>".$row["start_time"]."</td>";
+                    echo "</tr>";
                   }
                 }
-                // }
                 $dbh = null;
               ?>
                 </tbody>
               </table>
-              <div class="btn-group">
-                <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>
-              </div>
             </form>
+          </div>
           </div>
 
         </div>
