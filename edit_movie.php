@@ -24,11 +24,9 @@
             <div class="row">
                 <div class="col-md-12">
 <?php 
-print_r($_POST);
 $errorMessage = "error";
 
 if (isset($_POST) && !empty($_POST)) {
-    //$start_time =strtotime($_POST["datepicker"]);
     $movie = $_POST["moviename"];
     $start_time =$_POST["datepicker"];
     $complex = $_POST["tcomplex"];
