@@ -163,10 +163,8 @@ $(document).ready(function () {
                             '<input type="hidden" name="oldtime" value="'.$row[3].'"/>'.
                             '<input type="hidden" name="movie_id" value="'.$row[5].'"/>'.
                             '</tr>';
-
                         }
                         $dbh = null;
-
                     ?>
                   </tbody>
                 </table>
