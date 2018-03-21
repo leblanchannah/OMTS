@@ -29,9 +29,9 @@
 
   <div class="container">
 
-    <div class="row"> 
+    <div class="row">
       <!-- Include the account info banner -->
-      <?php 
+      <?php
   include_once("editProfileSection.php");
   ?>
       <div class="col-md-9">
@@ -56,12 +56,12 @@
                 date_default_timezone_set('America/Toronto');
                 $timezone = date_default_timezone_get();
                 // echo "The current server timezone is: " . $timezone;
-                $date = date('Y/m/d H:i:s');
+                $date = date('Y-m-d');
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                 $rows = $dbh->query("select m.title, p.name, c.street, c.city, p.start_date, p.end_date, m.movie_id from playing p, theatre_complex c join movie m where p.movie_id = m.movie_id and p.name = c.name");
                 foreach($rows as $row) {
-                  if ($date > $row["start_date"] && $date < $row["end_date"]) { // only displaying showings that are active
+                  if ($date >= $row["start_date"] && $date <= $row["end_date"]) { // only displaying showings that are active
                     echo "<tr>";
                     echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$row['movie_id']."'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
