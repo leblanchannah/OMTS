@@ -23,42 +23,73 @@
 </head>
 
 <body>
+  <?php
+  session_start();
+  $user_id=$_SESSION['user_id'];
 
-
+  $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+$rows = $dbh->query("select * from customer where '$user_id'=account_number");
+$row = $rows->fetch();
+$dbh = null;
+?>
 
     <div class="container">
-    <div class="col-md-6">
+    <div class="col">
         <div class="card card-default">
-          <div class="card-header"></div>
+          <div class="card-header">Login ID: <?php echo $row['login_id']?> <br> Account ID: <?php echo $row['account_number']?></div>
 
           <div class="card-body">
-            <form action='' method='post'>
+            <form action='submitProfileChange.php' method='post'>
               <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">User Profile</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                date_default_timezone_set('America/Toronto');
-                $timezone = date_default_timezone_get();
-                // echo "The current server timezone is: " . $timezone;
-                $date = date('Y/m/d H:i:s');
-
-                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                $rows = $dbh->query("select * from customer where account_number = 1");
-                foreach($rows as $row) {
-                    echo "<tr>";
-                    echo "<td>Account Number: ".$row["account_number"]."</td></tr>";
-                    echo "<td>First Name: ".$row["fname"]."</td></tr>";
-                    echo "<td>Last Name: ".$row["lname"]."</td></tr>";
-                    echo "<td>Password: ".$row["password"]."</td></tr>";
-                  }
-                
-                $dbh = null;
-              ?>
-                </tbody>
+                <div class="form-group float-label-control">
+                 <label for="">First Name</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['fname'];?>" name="fname" value="<?php echo $row['fname'];?>" required>
+                 </div>          
+                 <div class="form-group float-label-control">
+                 <label for="">Last Name</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['lname'];?>" name="lname" value="<?php echo $row['lname'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Password</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['password'];?>" name="password" value="<?php echo $row['password'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Phone Number</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['phone_number'];?>" name="phone_number" value="<?php echo $row['phone_number'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Email</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['email'];?>" name="email" value="<?php echo $row['email'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Street</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['street'];?>" name="street" value="<?php echo $row['street'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">City</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['city'];?>" name="city" value="<?php echo $row['city'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Postal Code</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['postal_code'];?>" name="postal_code" value="<?php echo $row['postal_code'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Credit Card Number</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['credit_card_num'];?>" name="credit_card_num" value="<?php echo $row['credit_card_num'];?>" required>
+                 </div>
+                 <div class="form-group float-label-control">
+                 <label for="">Credit Card Expiry Date</label>
+                 <input type="text" class="form-control" placeholder="<?php echo $row['credit_expiry_date'];?>" name="credit_expiry_date" value="<?php echo $row['credit_expiry_date'];?>" required>
+                 </div>
+                 <div class='form-group'>
+                              <input type='submit' name='profile-change-submit' id='profile-change-submit' tabindex='2' class='form-control btn btn-login' value= 'Change Profile'>
+                            </div>
+                  <!-- //   echo "<tr><td>Account Number: ".$row["account_number"]."</td></tr>";
+                  //   echo "<tr><td>First Name: ".$row["fname"]."</td></tr>";
+                  //   echo "<tr><td>Last Name: ".$row["lname"]."</td></tr>";
+                  //   echo "<tr><td>Password: ".$row["password"]."</td></tr>";
+                    echo "</form>"; -->
+                  
               </table>
               <!-- <div class="btn-group">
                 <button type="submit" name="ReserveButton" id="reservation" class="btn btn-primary">Make Reservation</button>

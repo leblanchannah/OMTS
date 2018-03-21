@@ -8,8 +8,7 @@
             $user_id=$_SESSION['user_id'];
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
             $rows = $dbh->query("select account_number, email, fname, lname from customer where '$user_id'=account_number");
-            
-            foreach($rows as $row){
+            $row = $rows->fetch();
                echo "   <h4 id='user-name'>".$row['fname']." ".$row['lname']."</h4><small>";
             echo "  <cite title='Account ID' id='user-ID'>Account ID: ".$row['account_number']."
             <i class='glyphicon glyphicon-map-marker'>
@@ -19,7 +18,8 @@
         <p>";
         echo "<i class='glyphicon glyphicon-envelope' id='user-email'></i>".$row['email']."
         </p>";
-           }
+        $dbh = null;
+
           ?>
      
         <form action= "editProfile.php" method="post">
