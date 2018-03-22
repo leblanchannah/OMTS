@@ -76,7 +76,7 @@
                   $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
                   if ($date <= $row["start_time"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' value='".$multi_key."'></label></div></td>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' checked value='".$multi_key."'></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
                     echo "<td>".$row["num"]."</td>";
                     echo "<td>".$row["start_time"]."</td>";
