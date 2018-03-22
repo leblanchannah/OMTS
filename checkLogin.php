@@ -12,6 +12,10 @@
             $id = $row[0];
         }
          if($count==0){
+
+            $rows = $dbh->query("select count(*) count, account_number from admin where '$user_id'=login_id and '$user_pass' = password");
+            $row = $rows->fetch();
+            if($row['count']==0){
             echo "Incorrect ID/password.";
             echo " <div class='container'>";
             echo "     <div class='row'>";
@@ -23,12 +27,16 @@
            echo "</form>";
             echo "          </div>";
             echo "     </div>";
-            echo " </div>";
+            echo " </div>";}
+            else{
+                echo $row['account_number'];
+                $_SESSION['user_id'] = $row['account_number'];
+                header("Location: admin.php");
+            }
 
         }
         else{
-            $_SESSION['loggedin'] = true;
-           $_SESSION['user_id'] = $id[0];
+           $_SESSION['user_id'] = $id;
            header("Location: browse_complex.php");
            exit;
                   

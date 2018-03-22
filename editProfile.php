@@ -51,7 +51,7 @@ $dbh = null;
                  </div>
                  <div class="form-group float-label-control">
                  <label for="">Password</label>
-                 <input type="text" class="form-control" placeholder="<?php echo $row['password'];?>" name="password" value="<?php echo $row['password'];?>" required>
+                 <input type="password" class="form-control" placeholder="<?php echo $row['password'];?>" name="password" value="<?php echo $row['password'];?>" required>
                  </div>
                  <div class="form-group float-label-control">
                  <label for="">Phone Number</label>

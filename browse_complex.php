@@ -25,7 +25,8 @@
 <body>
 
 
-<?php session_start(); ?>
+<?php session_start();
+ ?>
 
   <div class="container">
 
