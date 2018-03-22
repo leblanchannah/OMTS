@@ -1,8 +1,4 @@
-<?php
-// editable fields for complex -> everything but number of theatres
-// take all old info from hidden inputs in the table, use it to update row with new inputs
-print_r($_POST);
-?>
+
 <?php include 'adminnavbar.php'?>
 <!doctype html>
 <html lang="en">

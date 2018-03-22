@@ -1,9 +1,3 @@
-<?php
-// editable fields for complex -> everything but number of theatres
-// take all old info from hidden inputs in the table, use it to update row with new inputs
-print_r($_POST);
-//Array ( [size] => S [addseats] => 22 [oldcomplex] => complex_1 [theater] => 2 )
-?>
 <?php include 'adminnavbar.php'?>
 <!doctype html>
 <html lang="en">
@@ -50,8 +44,7 @@ print_r($_POST);
             try {
               $stmt = $dbh->prepare("UPDATE theatre SET ".$bind." WHERE name=:oldname AND num=:theater");
             //     // insert a row   
-            print_r($params);
-            print_r($bind); 
+
               if ($stmt->execute($params)) {
             //         // success
                     echo '<div class="alert alert-primary" role="alert">

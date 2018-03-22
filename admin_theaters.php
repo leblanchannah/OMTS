@@ -21,10 +21,15 @@
     <link href="customer.css" rel="stylesheet">
     <script>
     $(document).ready(function () {
+        $('#goodcall').fadeToggle("slow");
+        $('#badcall').fadeToggle("slow");
+
        $( "#complextable input:radio" ).prop("checked", true);
        $( "#theatresfromc input:radio" ).prop("checked", true);
 
         $( "#tcomplex5" ).change(function() {
+            $('#del_theatre').prop('disabled', false);
+            $('#edit_theatre').prop('disabled', false);
 
             $.ajax({
                 type: 'post',
@@ -56,6 +61,53 @@
             $('#edit_theatre_t').append(theat);
         });
 
+         $('#del_complex').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: 'delete_complex.php',
+                    data: $('#complexes').serialize(),
+                    success:function(data) {
+                         if (data != "error") {
+                            $('table#complextable tr#'+data).remove();
+                            $('#goodcall').text("Success: deleted complex.")
+                            $('#goodcall').fadeToggle("slow");
+                            $('#goodcall').fadeToggle("slow");
+                         } else {
+                            alert("Unable to delete user.");
+                            $('#badcall').text("Error: unable to delete complex.")
+                            $('#badcall').fadeToggle("slow");
+                            $('#badcall').fadeToggle("slow");
+
+                         }
+                    }
+                });
+            });
+            
+
+            $('#del_theatre').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'post',
+                    url: 'delete_theatre.php',
+                    data: $('#theatresfromc').serialize(),
+                    success:function(data) {
+                         if (data != "error") {
+                            $('table#ts tr#'+data).remove();
+                            $('#goodcall').text("Success: deleted complex.")
+                            $('#goodcall').fadeToggle("slow");
+                            $('#goodcall').fadeToggle("slow");
+                         } else {
+                            alert("Unable to delete user.");
+                            $('#badcall').text("Error: unable to delete complex.")
+                            $('#badcall').fadeToggle("slow");
+                            $('#badcall').fadeToggle("slow");
+
+                         }
+                    }
+                });
+            });
+
 
     });
 
@@ -63,7 +115,13 @@
   </head>
   <body>
     <div class="container">
-
+        <div class="row">
+            <div class="col-sm-12">
+            <div class="alert alert-success" id="goodcall"></div>
+            <div class="alert alert-danger" id="badcall"></div>
+            </div>
+            <!--/.col-sm-12 -->
+        </div>
         <div class="row">
         <div class="col-md-4">
             <div class="card card-default">
@@ -121,7 +179,7 @@
                                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                                             $rows = $dbh->query('SELECT * FROM theatre_complex');
                                             foreach($rows as $row) {
-                                                echo '<tr><td><div class="radio"><label><input type="radio" id="customers" name="complex" value='.$row[1].'></label>'.
+                                                echo '<tr id='.$row[1].'><td><div class="radio"><label><input type="radio" id="customers" name="complex" value="'.$row[1].'"></label>'.
                                                 '</td></div></td><td>'.$row[1].'</td><td>'.$row[0].
                                                 '</td><td>'.$row[2].', '.$row[3].', '.$row[4].'</td><td>'.$row[5].'</td><td>'.
                                              '</tr>';
@@ -131,7 +189,7 @@
                                     </tbody>
 
                                 </table>
-                                <button type="button" id="del_complex" class="btn btn-danger" disabled>Delete Theatre</button>
+                                <button type="button" id="del_complex" class="btn btn-danger">Delete Theatre</button>
                                 <button type="button" id="edit_complex" class="btn btn-warning" data-toggle="modal" data-target="#modal_div">Edit Theatre</button>
                              </form>
                             </div>
@@ -200,6 +258,7 @@
                                     <label for="tcomplex5">Theatre Complex</label>
                                     <select class="form-control" name="tcomplex5" id="tcomplex5">
                                     <?php
+                                        echo '<option class="dropdown-item" name="theatrecomplex5" value="all">ALL</option>';
                                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                                         $rows = $dbh->query('select name from theatre_complex');
                                         foreach($rows as $row) {
@@ -220,15 +279,16 @@
                                 <tbody id="theatrest">
                                     <?php
                                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                        $rows = $dbh->query('select * from theatre where name="complex_1"');
+                                        $rows = $dbh->query('select * from theatre');
                                         foreach($rows as $row) {
-                                            echo '<tr><td><div class="radio"><label><input type="radio"" id="check" name="complex_name" value="complex_1"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td></tr>';
+                                            echo '<tr><td><div class="radio"><label><input type="radio"" id="check" name="complex_name" value="'.$row[3].'"></label></div>'.
+                                            '<input type="hidden" id="check" name="num" value="'.$row[0].'"></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td></tr>';
                                         }
                                     ?>
                                 </tbody>
                             </table>
                             <button type="button" id="del_theatre" class="btn btn-danger" disabled>Delete Theatre</button>
-                            <button type="button" id="edit_theatre" class="btn btn-warning" data-toggle="modal" data-target="#modalt_div">Edit Theatre</button>
+                            <button type="button" id="edit_theatre" class="btn btn-warning" data-toggle="modal" data-target="#modalt_div" disabled>Edit Theatre</button>
                             
 
                             </form>

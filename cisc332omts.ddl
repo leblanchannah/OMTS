@@ -30,8 +30,8 @@ num				INTEGER		NOT NULL,
 name			VARCHAR(50)	NOT NULL,
 
 PRIMARY KEY(num, name, start_time, movie_id),
-FOREIGN KEY(num, name) REFERENCES theatre(num, name) ON UPDATE CASCADE,
-FOREIGN KEY(movie_id) REFERENCES movie(movie_id) ON UPDATE CASCADE
+FOREIGN KEY(num, name) REFERENCES theatre(num, name) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(movie_id) REFERENCES movie(movie_id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE movie(
@@ -135,8 +135,8 @@ booking_time DATE NOT NULL,
 cancel_flag	BOOLEAN NOT NULL,
 
 PRIMARY KEY(account_number, num, name, start_time, movie_id),
-FOREIGN KEY(num, name, start_time, movie_id) REFERENCES showing(num, name, start_time, movie_id) ON UPDATE CASCADE,
-FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCADE
+FOREIGN KEY(num, name, start_time, movie_id) REFERENCES showing(num, name, start_time, movie_id) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 --  theatre complex
