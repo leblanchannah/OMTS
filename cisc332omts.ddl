@@ -140,10 +140,10 @@ FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCAD
 );
 
 --  theatre complex
-INSERT INTO theatre_complex VALUES (6, "Complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
-INSERT INTO theatre_complex VALUES (4, "Complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
-INSERT INTO theatre_complex VALUES (3, "Complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
-INSERT INTO theatre_complex VALUES (3, "Complex_4", "18 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
+INSERT INTO theatre_complex VALUES (6, "complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
+INSERT INTO theatre_complex VALUES (4, "complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
+INSERT INTO theatre_complex VALUES (3, "complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
+INSERT INTO theatre_complex VALUES (3, "complex_4", "18 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
 
 -- theatre
 INSERT INTO theatre VALUES (1, 100, "S", "complex_1");
