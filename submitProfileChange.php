@@ -23,10 +23,7 @@
     $update->bindParam(':credit_card_num', $_POST['credit_card_num'],PDO::PARAM_STR);
     $update->bindParam('credit_card_expiry', $_POST['credit_expiry_date'],PDO::PARAM_STR);
     $update->bindParam(':account_id',  $_SESSION['user_id'],PDO::PARAM_STR);
-        
-    print_r($_POST);
-    echo "<br>";
-    print_r($update);
+
     $dbh = null;
 
     if($update -> execute()){

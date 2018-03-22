@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" data-toggle="tooltip" title="Browse Movies, Make Reservations" href="customer.php">Browse Movies
+                <a class="nav-link" data-toggle="tooltip" title="Browse Movies, Make Reservations" href="browse_complex.php">Browse Movies
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
