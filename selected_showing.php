@@ -54,24 +54,23 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-9 mb-3">
         <div class="card card-default">
-          <div class="card-header">Showings at: <?php echo $_POST['selected_theatre_complex'] ?></div>
-          <div class="card-body">
+          <div class="card-header">Showing for:
           <?php
+            list($num, $name, $start_time, $movie_id) = explode("|", $_POST['selected_showing']);
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $rows = $dbh->query('SELECT * FROM theatre_complex c WHERE c.name ='.'"'.$_POST['selected_theatre_complex'].'"');
+            $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
             foreach($rows as $row) {
-              echo $row['street'].'<br>';
-              echo $row['city'].'<br>';
-              echo $row['postal_code'].'<br>';
-              echo $row['phone_number'].'<br>';
+                echo $row['title']
+                ." at "
+                .$name;
             }
-
             $dbh = null;
-          ?>
-
-            <form action='selected_showing.php' method='post'>
+            ?>
+            </div>
+          <div class="card-body">
+            <form action='make_reservation.php' method='post'>
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -89,17 +88,15 @@
                 $timezone = date_default_timezone_get();
                 $date = date('Y-m-d');
 
-                $theatre_complex = $_POST['selected_theatre_complex'];
-
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                 // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
-                $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE name =".'"'.$theatre_complex.'"');
+                $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = $movie_id WHERE name =".$dbh->quote($name)."AND num=$num AND movie.movie_id=$movie_id");
                 foreach($rows as $row) {
                   // num, name, start_time, movie_id
-                  $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
+                  $multi_key = implode("|", array($row['num'], $name, $row['start_time'], $row['movie_id']));
                   if ($date <= $row["start_time"]) { // only displaying showings that are active
                     echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' value='".$multi_key."'></label></div></td>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$multi_key."' checked></label></div></td>";
                     echo "<td>".$row["title"]."</td>";
                     echo "<td>".$row["num"]."</td>";
                     echo "<td>".$row["start_time"]."</td>";
@@ -111,8 +108,41 @@
               ?>
                 </tbody>
               </table>
-              <input class="btn btn-primary" type="submit" value="Select Showing">
+              <input class="btn btn-primary" type="submit" value="Confirm Booking">
             </form>
+          </div>
+          </div>
+
+        </div>
+
+
+    <div class="col-md-12">
+        <div class="card card-default">
+          <div class="card-header">Movie:
+          <?php
+            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+            $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
+            foreach($rows as $row) {
+                echo $row['title'];
+            }
+            $dbh = null;
+            ?>
+            </div>
+          <div class="card-body">
+          <?php
+            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+            $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
+            foreach($rows as $row) {
+                echo "Director: ".$row['director']."<br>";
+                echo "Length: ".$row['length']." mins<br>";
+                echo "Rating: ".$row['rating']."<br>";
+                echo "Actors: ".$row['actors']."<br>";
+                echo "Synopsis: ".$row['plot_synopsis']."<br>";
+                echo "Production Company: ".$row['production_company']."<br>";
+            }
+            $dbh = null;
+            ?>
+          </div>
           </div>
           </div>
 
