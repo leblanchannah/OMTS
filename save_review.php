@@ -25,9 +25,10 @@
 
 <?php
     session_start();
+
+    $error_html = '<div class="alert alert-danger" role="alert">Review creation unsuccessful, please <a href="reviews.php">go back</a> and try again.</div>';
+
     if(isset($_POST['new_review'])) {
-
-
         list($selected_movie, $user_id) = explode("|", $_POST['new_review']);
         $review_text = $_POST['new_review_text'];
 
@@ -43,16 +44,40 @@
                header("Location: reviews.php");
                } else {
                // failure
-               echo '<div class="alert alert-danger" role="alert">
-               Review creation unsuccessful, please <a href="reviews.php">go back</a> and try again.
-               </div>';
+               echo $error_html;
                }
 
          } catch (PDOException $e) {
-            echo '<div class="alert alert-danger" role="alert">
-            Review creation unsuccessful, please <a href="reviews.php">go back</a> and try again.
-            </div>';
+            echo $error_html;
          }
+         $dbh = null;
+
+    } else if (isset($_POST['update_review'])) {
+        list($selected_movie, $user_id) = explode("|", $_POST['update_review']);
+        $review_text = $_POST['update_review_text'];
+
+        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+        try {
+            $query = "UPDATE reviews r SET
+            r.review = :updatereview WHERE
+            r.account_number = :account_id AND
+            r.movie_id = :movieid";
+
+            $update = $dbh->prepare($query);
+
+            $update->bindParam(':updatereview', $review_text, PDO::PARAM_STR);
+            $update->bindParam(':account_id', $user_id, PDO::PARAM_INT);
+            $update->bindParam(':movieid', $selected_movie, PDO::PARAM_INT);
+
+            if($update->execute()){
+                header("Location: reviews.php");
+            } else{
+                echo $error_html;
+            }
+        } catch (PDOException $e) {
+            echo $error_html;
+        }
+        $dbh = null;
     }
 ?>
       <!-- Bootstrap core JavaScript

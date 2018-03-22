@@ -74,11 +74,22 @@
                     } else {
                         echo "There are no reviews for this movie at the moment. Please check again later or leave your own.<br>";
                     }
-                    echo '<br><div class="form-group">'
+
+                    $rows = $dbh->query("SELECT count(*) count FROM reviews r WHERE r.movie_id = $selected_movie AND r.account_number =".$_SESSION['user_id']);
+                    $review_count = $rows->fetch()['count'];
+                    if ($review_count) {
+                        echo '<br><div class="form-group">'
+                        .'<label for="update_review_text">Update Review:</label>'
+                        .'<textarea class="form-control" id="update_review_text" name="update_review_text" rows="3"></textarea>'
+                        .'</div>'
+                        .'<button type="submit" name="update_review" id="update_review" value='.$review_key.' class="btn btn-primary">Update My Review</button>';
+                    } else {
+                        echo '<br><div class="form-group">'
                         .'<label for="new_review_text">Leave a Review:</label>'
                         .'<textarea class="form-control" id="new_review_text" name="new_review_text" rows="3"></textarea>'
-                    .'</div>'
-                    .'<button type="submit" name="new_review" id="new_review" value='.$review_key.' class="btn btn-primary">Select Movie</button>';
+                        .'</div>'
+                        .'<button type="submit" name="new_review" id="new_review" value='.$review_key.' class="btn btn-primary">Post Review</button>';
+                    }
                     $dbh = null;
                 ?>
             </form>
