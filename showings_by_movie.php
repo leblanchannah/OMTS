@@ -26,34 +26,31 @@
 
 <?php session_start(); ?>
 
-  <div class="container">
-    <div class="row">
-      <!-- Include the account info banner -->
-      <?php include_once("editProfileSection.php") ?>
+<div class="container">
+  <div class="row">
+    <!-- Include the account info banner -->
+    <?php include_once("editProfileSection.php") ?>
 
       <div class="col-md-9">
         <div class="card card-default">
-          <div class="card-header">Showings at: <?php echo $_POST['selected_theatre_complex'] ?></div>
-          <div class="card-body">
+          <div class="card-header">Showings for:
           <?php
+            $selected_movie = $_POST['selected_movie'];
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $rows = $dbh->query('SELECT * FROM theatre_complex c WHERE c.name ='.'"'.$_POST['selected_theatre_complex'].'"');
+            $rows = $dbh->query("SELECT * FROM movie m WHERE m.movie_id=$selected_movie");
             foreach($rows as $row) {
-              echo $row['street'].'<br>';
-              echo $row['city'].'<br>';
-              echo $row['postal_code'].'<br>';
-              echo $row['phone_number'].'<br>';
+              echo $row['title'];
             }
-
             $dbh = null;
-          ?>
-
+           ?>
+           </div>
+          <div class="card-body">
             <form action='selected_showing.php' method='post'>
               <table class="table table-hover">
                 <thead>
                   <tr>
                   <th scope="col"></th>
-                        <th scope="col">Movie</th>
+                        <th scope="col">Theatre Complex</th>
                         <th scope="col">Theatre</th>
                         <th scope="col">Start Time</th>
                         <th scope="col">Seats Available</th>
@@ -66,18 +63,16 @@
                 $timezone = date_default_timezone_get();
                 $date = date('Y-m-d');
 
-                $theatre_complex = $_POST['selected_theatre_complex'];
-
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                 // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
-                $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE name =".'"'.$theatre_complex.'"');
+                $rows = $dbh->query("SELECT title, num, name, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE seats.movie_id =$selected_movie");
                 foreach($rows as $row) {
                   // num, name, start_time, movie_id
-                  $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
+                  $multi_key = implode("|", array($row['num'], $row['name'], $row['start_time'], $row['movie_id']));
                   if ($date <= $row["start_time"]) { // only displaying showings that are active
                     echo "<tr>";
                     echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' value='".$multi_key."'></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
+                    echo "<td>".$row["name"]."</td>";
                     echo "<td>".$row["num"]."</td>";
                     echo "<td>".$row["start_time"]."</td>";
                     echo "<td>".$row["avail"]."</td>";

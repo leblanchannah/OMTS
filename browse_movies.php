@@ -24,16 +24,13 @@
 
 <body>
 
-
 <?php session_start(); ?>
 
-  <div class="container">
+<div class="container">
+  <div class="row">
+    <!-- Include the account info banner -->
+    <?php include_once("editProfileSection.php") ?>
 
-    <div class="row">
-      <!-- Include the account info banner -->
-      <?php
-  include_once("editProfileSection.php");
-  ?>
       <div class="col-md-9">
         <div class="card card-default">
           <div class="card-header">Select a Movie</div>

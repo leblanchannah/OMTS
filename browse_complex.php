@@ -31,9 +31,8 @@
 
     <div class="row">
       <!-- Include the account info banner -->
-      <?php
-  include_once("editProfileSection.php");
-  ?>
+      <?php include_once("editProfileSection.php") ?>
+
       <div class="col-md-9">
         <div class="card card-default">
           <div class="card-header">Select a Theatre Complex</div>
