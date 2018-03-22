@@ -140,9 +140,10 @@ FOREIGN KEY(account_number) REFERENCES customer(account_number) ON DELETE CASCAD
 );
 
 --  theatre complex
-INSERT INTO theatre_complex VALUES (6, "complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
-INSERT INTO theatre_complex VALUES (4, "complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
-INSERT INTO theatre_complex VALUES (3, "complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
+INSERT INTO theatre_complex VALUES (6, "Complex_1", "1 Theatre Lane", "Kingston", "F9G6U5", 6131234567);
+INSERT INTO theatre_complex VALUES (4, "Complex_2", "2 Cinema Avenue", "Calgary", "Y8I4O0", 1111111111);
+INSERT INTO theatre_complex VALUES (3, "Complex_3", "17 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
+INSERT INTO theatre_complex VALUES (3, "Complex_4", "18 Star Wars Park", "Toronto", "M1W4Z2", 123456789);
 
 -- theatre
 INSERT INTO theatre VALUES (1, 100, "S", "complex_1");
@@ -160,6 +161,10 @@ INSERT INTO theatre VALUES (4, 200, "M", "complex_2");
 INSERT INTO theatre VALUES (1, 100, "S", "complex_3");
 INSERT INTO theatre VALUES (2, 100, "S", "complex_3");
 INSERT INTO theatre VALUES (3, 100, "S", "complex_3");
+
+INSERT INTO theatre VALUES (1, 100, "S", "complex_4");
+INSERT INTO theatre VALUES (2, 100, "S", "complex_4");
+INSERT INTO theatre VALUES (3, 100, "S", "complex_4");
 
 
 -- showing
@@ -192,6 +197,8 @@ INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, produc
 VALUES ("The Godfather", "Francis Ford Coppola", 175, "R", "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.", "Marlon Brando, Al Pacino, James Caan", "Paramount Pictures", 6472945648);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
 VALUES ("The Dark Knight", "Christopher Nolan", 152, "R", "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham, the Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "Christian Bale, Heath Ledger, Aaron Eckhart", "Warner Bros.", 6472945648);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("Pulp Fiction", "Quentin Tarantino", 178, "16+", "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", "John Travolta, Uma Thurman, Samuel L. Jackson", "Miramax", 3859481728);
 
 -- playing
 INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 1);
