@@ -47,7 +47,7 @@
             ?>
             </div>
           <div class="card-body">
-            <form action='reservation_confirmation.php' method='post'>
+            <form action='make_reservation.php' method='post'>
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -87,8 +87,6 @@
               ?>
                 </tbody>
               </table>
-              <label for="num_tickets"># of Tickets</label>
-              <input class="form-control col-md-3 mb-3" id="num_tickets" name="num_tickets" type="text" value="1">
               <input class="btn btn-primary" type="submit" value="Reserve Seats">
             </form>
           </div>
