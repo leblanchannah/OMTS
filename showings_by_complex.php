@@ -42,54 +42,63 @@
               echo $row['street'].'<br>';
               echo $row['city'].'<br>';
               echo $row['postal_code'].'<br>';
-              echo $row['phone_number'].'<br>';
+              echo $row['phone_number'].'<br><br>';
             }
-
             $dbh = null;
+
+            $theatre_complex = $_POST['selected_theatre_complex'];
+
+            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+            $rows = $dbh->query("SELECT * from showing where showing.name =".$dbh->quote($theatre_complex));
+            $num_showings = $rows->fetch();
+            $dbh = null;
+
+            if ($num_showings) {
+              echo "<form action='selected_showing.php' method='post'>"
+              .'<table class="table table-hover">'
+              .'<thead>'
+              .'<tr>'
+                      .'<th scope="col"></th>'
+                      .'<th scope="col">Movie</th>'
+                      .'<th scope="col">Theatre</th>'
+                      .'<th scope="col">Start Time</th>'
+                      .'<th scope="col">Seats Available</th>'
+              .'</tr>'
+              .'</thead>'
+            .'<tbody>';
+
+            date_default_timezone_set('America/Toronto');
+            $timezone = date_default_timezone_get();
+            $date = date('Y-m-d');
+
+
+
+            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+            // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
+            $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE name =".'"'.$theatre_complex.'"');
+            foreach($rows as $row) {
+              // num, name, start_time, movie_id
+              $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
+              if ($date <= $row["start_time"]) { // only displaying showings that are active
+                echo "<tr>";
+                echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' checked value='".$multi_key."'></label></div></td>";
+                echo "<td>".$row["title"]."</td>";
+                echo "<td>".$row["num"]."</td>";
+                echo "<td>".$row["start_time"]."</td>";
+                echo "<td>".$row["avail"]."</td>";
+                echo "</tr>";
+              }
+            }
+            $dbh = null;
+
+            echo '</tbody>'
+            .'</table>'
+            .'<input class="btn btn-primary" type="submit" value="Select Showing">'
+            .'</form>';
+            } else {
+              echo "There are no showings at this theatre complex at the moment. Please check again later.";
+            }
           ?>
-
-            <form action='selected_showing.php' method='post'>
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                  <th scope="col"></th>
-                        <th scope="col">Movie</th>
-                        <th scope="col">Theatre</th>
-                        <th scope="col">Start Time</th>
-                        <th scope="col">Seats Available</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                <?php
-                date_default_timezone_set('America/Toronto');
-                $timezone = date_default_timezone_get();
-                $date = date('Y-m-d');
-
-                $theatre_complex = $_POST['selected_theatre_complex'];
-
-                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
-                $rows = $dbh->query("SELECT title, num, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = movie.movie_id WHERE name =".'"'.$theatre_complex.'"');
-                foreach($rows as $row) {
-                  // num, name, start_time, movie_id
-                  $multi_key = implode("|", array($row['num'], $theatre_complex, $row['start_time'], $row['movie_id']));
-                  if ($date <= $row["start_time"]) { // only displaying showings that are active
-                    echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='selected_showing' checked value='".$multi_key."'></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
-                    echo "<td>".$row["num"]."</td>";
-                    echo "<td>".$row["start_time"]."</td>";
-                    echo "<td>".$row["avail"]."</td>";
-                    echo "</tr>";
-                  }
-                }
-                $dbh = null;
-              ?>
-                </tbody>
-              </table>
-              <input class="btn btn-primary" type="submit" value="Select Showing">
-            </form>
           </div>
           </div>
 
