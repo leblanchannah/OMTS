@@ -1,16 +1,15 @@
 <?php
-    //customer name -> account id
-    print_r($_POST);
+    //Array ( [tcomplex5] => complex_3 [num] => 3 )
     $errorMessage = "error";
-    if (isset($_POST["complex"]) && !empty($_POST["complex"])) {
+    if (isset($_POST["tcomplex5"]) && !empty($_POST["tcomplex5"]) && !empty($_POST["num"]) && isset($_POST["num"])) {
         // check that customer exists
         try {
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $stmt = $dbh->prepare("DELETE FROM theatre_complex WHERE name=:complex");
+            $stmt = $dbh->prepare("DELETE FROM theatre WHERE name=:complex AND num=:tnum");
 
-            if ($stmt->execute(array(':complex' => $_POST['complex']))) {
+            if ($stmt->execute(array(':complex' => $_POST['tcomplex5'], ':tnum' => $_POST['num']))) {
             // success
-                echo $_POST["complex"];
+                echo $_POST["num"].$_POST['tcomplex5'];
             } else {
             // failure
                 echo $errorMessage;

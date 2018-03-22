@@ -77,7 +77,7 @@
               <input type="text" class="form-control" id="director" name="director" placeholder="">
             </div>
             <div class="form-group">
-              <label for="length">Length</label>
+              <label for="length">Length (minutes) </label>
               <input type="text" class="form-control" name="length" id="length" placeholder="">
             </div>
             <div class="form-group">
