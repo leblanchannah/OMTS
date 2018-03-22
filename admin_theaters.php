@@ -21,6 +21,7 @@
     <link href="customer.css" rel="stylesheet">
     <script>
     $(document).ready(function () {
+       $( "#complextable input:radio" ).prop("checked", true);
        $( "#theatresfromc input:radio" ).prop("checked", true);
 
         $( "#tcomplex5" ).change(function() {
@@ -41,9 +42,18 @@
         $('#modal_div').on('shown.bs.modal', function () {
             comp = $("#complexes input[type='radio']:checked").val();
              $('.modal-title').text('Edit '+comp);
-             $('#myInput').trigger('focus');
              oldcomp = '<div class="form-group"><input type="hidden" class="form-control" id="oldcomp" name="oldcomplex" value="'+comp+'"></div>'
              $('#edit_complex_f').append(oldcomp);
+        });
+
+        $('#modalt_div').on('shown.bs.modal', function () {
+            comp = $("#theatrest input[type='radio']:checked").val();
+            theat = $("#theatrest input[type='radio']:checked").parent().closest('td').next().text();
+            $('.modal-title').text('Edit '+comp);
+            oldcomp = '<div class="form-group"><input type="hidden" class="form-control" id="oldcomp" name="oldcomplex" value="'+comp+'"></div>'
+            $('#edit_theatre_t').append(oldcomp);
+            theat = '<div class="form-group"><input type="hidden" class="form-control" id="theatre" name="theater" value="'+theat+'"></div>'
+            $('#edit_theatre_t').append(theat);
         });
 
 
@@ -53,45 +63,7 @@
   </head>
   <body>
     <div class="container">
-        <div class="row">
-        <div class="modal" tabindex="-1" role="dialog" id="modal_div">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalc">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="edit_complex_f" method="post" action="edit_complex.php"> 
-                    <div class="form-group">
-                        <label for="cname">Name</label>
-                        <input type="text" class="form-control" id="e_name" name="cname" placeholder="">
-                    </div>       
-                    <div class="form-group">
-                        <label for="cstreet">Address</label>
-                        <input type="text" class="form-control" id="e_cstreet" name="cstreet" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="ccity">City</label>
-                        <input type="text" class="form-control" id="e_ccity" name="ccity" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="ccode">Postal Code</label>
-                        <input type="text" class="form-control" id="e_ccode" name="ccode" placeholder="">
-                    </div>
-                    <div class="form-group">
-                        <label for="cnumber">Phone Number</label>
-                        <input type="text" class="form-control" id="e_cnumber" name="cnumber" placeholder="">
-                    </div>
-                    <button type="submit" id="edit_complex_s" class="btn btn-warning">Update</button>
-                </form>
-            </div>
-            </div>
-        </div>
-        </div>
-        </div>
+
         <div class="row">
         <div class="col-md-4">
             <div class="card card-default">
@@ -134,7 +106,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <form id="complexes">
-                                <table class="table table-hover table-responsive">
+                                <table class="table table-hover table-responsive" id="complextable">
                                     <thead>
                                         <tr>
                                             <th scope="col"></th>
@@ -256,7 +228,7 @@
                                 </tbody>
                             </table>
                             <button type="button" id="del_theatre" class="btn btn-danger" disabled>Delete Theatre</button>
-                            <button type="button" id="edit_theatre" class="btn btn-warning">Edit Theatre</button>
+                            <button type="button" id="edit_theatre" class="btn btn-warning" data-toggle="modal" data-target="#modalt_div">Edit Theatre</button>
                             
 
                             </form>
@@ -265,10 +237,7 @@
                     </div>
                 </div>
             </div>
-
-      
             </div>
-
         </div>
     </div>
 <!-- /.row> -->
@@ -280,6 +249,73 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <div class="modal" tabindex="-1" role="dialog" id="modal_div">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalc">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_complex_f" method="post" action="edit_complex.php"> 
+                    <div class="form-group">
+                        <label for="cname">Name</label>
+                        <input type="text" class="form-control" id="e_name" name="cname" placeholder="">
+                    </div>       
+                    <div class="form-group">
+                        <label for="cstreet">Address</label>
+                        <input type="text" class="form-control" id="e_cstreet" name="cstreet" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ccity">City</label>
+                        <input type="text" class="form-control" id="e_ccity" name="ccity" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="ccode">Postal Code</label>
+                        <input type="text" class="form-control" id="e_ccode" name="ccode" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnumber">Phone Number</label>
+                        <input type="text" class="form-control" id="e_cnumber" name="cnumber" placeholder="">
+                    </div>
+                    <button type="submit" id="edit_complex_s" class="btn btn-warning">Update</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
 
+        <div class="modal" tabindex="-2" role="dialog" id="modalt_div">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="modalc">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="edit_theatre_t" method="post" action="edit_theatre.php">
+                    <div  class="form-group">   
+                    <label for="size">Screen Size</label>
+                    <select class="form-control" id="addsize" name="size">
+                        <option class="dropdown-item" name="1" value="S">S</option>
+                        <option class="dropdown-item" name="2" value="M">M</option>
+                        <option class="dropdown-item" name="3" value="L">L</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addseats">Number of Seats</label>
+                        <input type="text" class="form-control" id="addseats" name="addseats" placeholder="">
+                    </div>
+                    
+                    <button type="submit" id="edit_complex_s" class="btn btn-warning">Update</button>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div> 
   </body>
 </html>

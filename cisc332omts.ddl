@@ -19,7 +19,7 @@ screen_size		CHAR(1)	NOT NULL,
 name			VARCHAR(50)	NOT NULL,
 
 PRIMARY KEY(num, name),
-FOREIGN KEY(name) REFERENCES theatre_complex(name)
+FOREIGN KEY(name) REFERENCES theatre_complex(name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE showing(
@@ -59,7 +59,7 @@ name			VARCHAR(50)	NOT NULL,
 movie_id INTEGER NOT NULL,
 
 PRIMARY KEY(name, movie_id),
-FOREIGN KEY(name) REFERENCES theatre_complex(name),
+FOREIGN KEY(name) REFERENCES theatre_complex(name) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY(movie_id) REFERENCES movie(movie_id)
 );
 

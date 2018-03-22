@@ -2,6 +2,7 @@
 // editable fields for complex -> everything but number of theatres
 // take all old info from hidden inputs in the table, use it to update row with new inputs
 print_r($_POST);
+//Array ( [size] => S [addseats] => 22 [oldcomplex] => complex_1 [theater] => 2 )
 ?>
 <?php include 'adminnavbar.php'?>
 <!doctype html>
@@ -26,44 +27,28 @@ print_r($_POST);
     <div class="row">
         <div class="col-md-12">
         <?php
-        //Array ( [cstreet] => [ccity] => [ccode] => [cnumber] => [oldcomplex] => complex_3 )
             $oldcomplex = $_POST["oldcomplex"]; 
             $bind = "";
             $params = array();
             $counter = 0;
-            if (isset($_POST["cname"]) && !empty($_POST["cname"])) {
-              $bind = $bind. 'name=:newname';
+            if (isset($_POST["addseats"]) && !empty($_POST["addseats"])) {
+              $bind = $bind. 'max_seats=:addseats';
               $counter += 1;
-              $params[":newname"] = $_POST["cname"];
+              $params[":addseats"] = $_POST["addseats"];
 
             }
-            if (isset($_POST["cstreet"]) && !empty($_POST["cstreet"])) {
-              $bind = ($counter > 0) ? $bind.', street=:street': $bind.'street=:street';
+            if (isset($_POST["size"]) && !empty($_POST["size"])) {
+              $bind = ($counter > 0) ? $bind.', screen_size=:size': $bind.'screen_size=:size';
               $counter += 1;
-              $params[":street"] = $_POST["cstreet"];
+              $params[":size"] = $_POST["size"];
             }
-            if (isset($_POST["ccity"]) && !empty($_POST["ccity"])) {
-              $bind = ($counter > 0) ? $bind.', city=:city': $bind.'city=:city';
-              $counter += 1;
-              $params[":city"] = $_POST["ccity"];
-
-            }
-            if (isset($_POST["ccode"]) && !empty($_POST["ccode"])) {
-              $bind = ($counter > 0) ? $bind.', postal_code=:postalc': $bind.'postal_code=:postalc';
-              $counter += 1;
-              $params[":postalc"]=$_POST["ccode"];
-
-            }
-            if (isset($_POST["cnumber"]) && !empty($_POST["cnumber"])) {
-              $bind = ($counter > 0) ? $bind.', phone_number=:phone': $bind.'phone_number=:phone';
-              $counter += 1;
-              $params[":phone"]=$_POST["cnumber"];
-
-            }
+            
             $params[":oldname"]=$oldcomplex;
+            $params[":theater"]=$_POST["theater"];
+
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
             try {
-              $stmt = $dbh->prepare("UPDATE theatre_complex SET ".$bind." WHERE name=:oldname");
+              $stmt = $dbh->prepare("UPDATE theatre SET ".$bind." WHERE name=:oldname AND num=:theater");
             //     // insert a row   
             print_r($params);
             print_r($bind); 
