@@ -22,6 +22,8 @@
 
     <script>
         $(document).ready(function () {
+
+           
             $('#goodcall').fadeToggle("slow");
             $('#badcall').fadeToggle("slow");
             $('#customer-delete').on('click', function (e) {
@@ -141,22 +143,22 @@
             <div class="col-sm-6">
               <h4>Popular Movie</h4>
               <?php
-                                    $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                    $row= $dbh->query("SELECT title, MAX(taken_seats) as popular FROM (SELECT movie_id, SUM(seats_reserved) as taken_seats FROM reserves GROUP BY movie_id) taken INNER JOIN movie ON movie.movie_id=taken.movie_id");
-                                    $results = $row->fetchAll(PDO::FETCH_ASSOC);
-                                    echo '<p id="popular-movie">'.$results[0]['title'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
-                                    $dbh = null;
-                                ?>
+                  $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                  $row= $dbh->query("SELECT title, MAX(taken_seats) as popular FROM (SELECT movie_id, SUM(seats_reserved) as taken_seats FROM reserves GROUP BY movie_id) taken INNER JOIN movie ON movie.movie_id=taken.movie_id");
+                  $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                  echo '<p id="popular-movie">'.$results[0]['title'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
+                  $dbh = null;
+              ?>
             </div>
             <div class="col-sm-6">
               <h4>Popular Theatre Complex</h4>
               <?php
-                                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                $row= $dbh->query("SELECT name, MAX(seats) as popular FROM (SELECT name, SUM(seats_reserved) as seats FROM `reserves` GROUP BY name) count_seats");
-                                $results = $row->fetchAll(PDO::FETCH_ASSOC);
-                                echo '<p id="popular-movie">'.$results[0]['name'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
-                                $dbh = null;
-                            ?>
+                    $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                    $row= $dbh->query("SELECT name, MAX(seats) as popular FROM (SELECT name, SUM(seats_reserved) as seats FROM `reserves` GROUP BY name) count_seats");
+                    $results = $row->fetchAll(PDO::FETCH_ASSOC);
+                    echo '<p id="popular-movie">'.$results[0]['name'].'<br> Tickets Sold: '.$results[0]['popular'].'</p>';
+                    $dbh = null;
+                ?>
             </div>
           </div>
           </div>
@@ -177,7 +179,7 @@
     <div class="card-body">
       <form id="customer_table" action="customer_history.php" method="post">
         <div class="row">
-          <table class="table table-hover table-responsive" id="all_customers">
+          <table class="table table-hover table-responsive display" style="width:100%" id="all_customers">
             <thead>
               <tr>
                 <th scope="col"></th>
@@ -192,17 +194,29 @@
             </thead>
             <tbody>
               <?php
-                                $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                                $rows = $dbh->query("select * from customer");
-                                // add try catch
-                                // account number is id for the row so we can delete the rows with jquery later
-                                foreach($rows as $row) {
-                                    echo '<tr id="'.$row[2].'"><td><div class="radio"><label><input type="radio"" id="customers" name="customername" value='.$row[2].'></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[6].
-                                    '</td><td>'.$row[3].'</td><td>'.$row[5].'</td><td>'.$row[7].', '.$row[8].', '.$row[9].'</td><tr>';
-                                }
-                                $dbh = null;
-                            ?>
+                  $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                  $rows = $dbh->query("select * from customer");
+                  // add try catch
+                  // account number is id for the row so we can delete the rows with jquery later
+                  foreach($rows as $row) {
+                      echo '<tr id="'.$row[2].'"><td><div class="radio"><label><input type="radio"" id="customers" name="customername" value='.$row[2].'></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[6].
+                      '</td><td>'.$row[3].'</td><td>'.$row[5].'</td><td>'.$row[7].', '.$row[8].', '.$row[9].'</td><tr>';
+                  }
+                  $dbh = null;
+              ?>
             </tbody>
+            <tfoot>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Login Id</th>
+                <th scope="col">Address</th>
+
+              </tr>
+            </tfoot>
           </table>
         </div>
         <div class="btn-group row">
