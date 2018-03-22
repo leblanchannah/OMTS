@@ -26,7 +26,7 @@
 <?php
     session_start();
 
-    $error_html = '<div class="alert alert-danger" role="alert">Review creation unsuccessful, please <a href="reviews.php">go back</a> and try again.</div>';
+    $error_html = '<div class="alert alert-danger" role="alert">Review action unsuccessful, please <a href="reviews.php">go back</a> and try again.</div>';
 
     if(isset($_POST['new_review'])) {
         list($selected_movie, $user_id) = explode("|", $_POST['new_review']);
