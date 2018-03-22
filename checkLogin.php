@@ -16,7 +16,7 @@
             echo " <div class='container'>";
             echo "     <div class='row'>";
             echo "          <div class='col'>";
-            echo "<form action= 'index.html' method='post'>";
+            echo "<form action= 'login.html' method='post'>";
             echo "<div class='btn-group'>";
             echo " <button type='submit' class='btn btn-danger'>Return</button>";
             echo "</div>";
@@ -29,7 +29,7 @@
         else{
             $_SESSION['loggedin'] = true;
            $_SESSION['user_id'] = $id[0];
-           header("Location: customer.php");
+           header("Location: browse_complex.php");
            exit;
                   
       }

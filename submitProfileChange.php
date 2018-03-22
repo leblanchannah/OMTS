@@ -27,7 +27,7 @@
     $dbh = null;
 
     if($update -> execute()){
-        header("Location: customer.php");
+        header("Location: browse_complex.php");
     }
 else{
     echo $errorMessage;
