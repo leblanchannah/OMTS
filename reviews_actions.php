@@ -32,9 +32,6 @@
         list($selected_movie, $user_id) = explode("|", $_POST['new_review']);
         $review_text = $_POST['new_review_text'];
 
-        $_POST['reviews'] = $selected_movie;
-        $_SESSION['browse_movies_post_data'] = $_POST;
-
         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
         try {
             $stmt = $dbh->prepare("insert into reviews values(:review, :movieid, :accountnum)");
@@ -72,6 +69,25 @@
             if($update->execute()){
                 header("Location: reviews.php");
             } else{
+                echo $error_html;
+            }
+        } catch (PDOException $e) {
+            echo $error_html;
+        }
+        $dbh = null;
+
+    } else if (isset($_POST['delete_review'])) {
+        list($selected_movie, $user_id) = explode("|", $_POST['delete_review']);
+
+        $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+        try {
+            $stmt = $dbh->prepare("DELETE FROM reviews WHERE account_number=:account_id");
+
+            if ($stmt->execute(array(':account_id' => $user_id))) {
+            // success
+                header("Location: reviews.php");
+            } else {
+            // failure
                 echo $error_html;
             }
         } catch (PDOException $e) {

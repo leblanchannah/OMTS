@@ -48,7 +48,7 @@
            ?>
            </div>
           <div class="card-body">
-            <form action='save_review.php' method='post'>
+            <form action='reviews_actions.php' method='post'>
                 <?php
                     $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                     $rows = $dbh->query("SELECT count(*) count FROM reviews r WHERE r.movie_id = $selected_movie");
@@ -82,7 +82,8 @@
                         .'<label for="update_review_text">Update Review:</label>'
                         .'<textarea class="form-control" id="update_review_text" name="update_review_text" rows="3"></textarea>'
                         .'</div>'
-                        .'<button type="submit" name="update_review" id="update_review" value='.$review_key.' class="btn btn-primary">Update My Review</button>';
+                        .'<button type="submit" name="update_review" id="update_review" value='.$review_key.' class="btn btn-primary">Update My Review</button>'
+                        .'<button type="submit" name="delete_review" id="delete_review" value='.$review_key.' class="btn btn-danger">Delete My Review</button>';
                     } else {
                         echo '<br><div class="form-group">'
                         .'<label for="new_review_text">Leave a Review:</label>'
