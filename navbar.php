@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">OMTS</a>
+    <a class="navbar-brand" href="browse_complex.php">OMTS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,24 +8,24 @@
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" data-toggle="tooltip" title="Home" href="#">Home
+                <a class="nav-link" data-toggle="tooltip" title="Browse Showings by Theatre Complex" href="browse_complex.php">Theatre Complex
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" data-toggle="tooltip" title="Browse Movies, Make Reservations" href="browse_complex.php">Browse Movies
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-
-            <li class="nav-item active">
-                <a class="nav-link" data-toggle="tooltip" title="View or cancel purchases" href="#">View Purchases
+                <a class="nav-link" data-toggle="tooltip" title="Browse Showings by Movie" href="browse_movies.php">Movies
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
 
             <li class="nav-item active">
-                 <a class="nav-link" data-toggle="tooltip" href="oldRentals.php">Browse Past Rentals 
+                <a class="nav-link" data-toggle="tooltip" title="View or cancel purchases" href="#">Purchases
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                 <a class="nav-link" data-toggle="tooltip" href="oldRentals.php">Past Rentals
                     <span class="sr-only">(current)</span>
                 </a>
               </li>
