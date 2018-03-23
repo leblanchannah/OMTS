@@ -186,11 +186,11 @@ INSERT INTO showing(start_time, movie_id, num, name) VALUES ("2018-03-23 19:00:0
 
 -- movie
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
-VALUES ("FAST FIFTY", "Arfus Chen", 1.3, "G", "Go fast. Go furious", "Dude_1", "My house", 9586748590);
+VALUES ("FAST FIFTY", "Arfus Chen", 120, "G", "Go fast. Go furious", "Dude_1", "My house", 9586748590);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
-VALUES ("RECURSION RECURSION", "Hann Leblank", 2.5, "R", "Recursive. Recursion", "Gal_1", "Her house", 3859481728);
+VALUES ("RECURSION RECURSION", "Hann Leblank", 250, "R", "Recursive. Recursion", "Gal_1", "Her house", 3859481728);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
-VALUES ("Another Fun Movie", "Hann Leblank", 1.78, "R", "This one is better.", "Gal_1,Dude_1", "Her house", 6472945648);
+VALUES ("Another Fun Movie", "Hann Leblank", 178, "R", "This one is better.", "Gal_1,Dude_1", "Her house", 6472945648);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
 VALUES ("The Shawshank Redemption", "Frank Darabont", 142, "R", "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", " Tim Robbins, Morgan Freeman, Bob Gunton", "Castle Rock Entertainment", 6472945648);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
@@ -198,7 +198,14 @@ VALUES ("The Godfather", "Francis Ford Coppola", 175, "R", "The aging patriarch 
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
 VALUES ("The Dark Knight", "Christopher Nolan", 152, "R", "When the menace known as the Joker emerges from his mysterious past, he wreaks havoc and chaos on the people of Gotham, the Dark Knight must accept one of the greatest psychological and physical tests of his ability to fight injustice.", "Christian Bale, Heath Ledger, Aaron Eckhart", "Warner Bros.", 6472945648);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
-VALUES ("Pulp Fiction", "Quentin Tarantino", 178, "16+", "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", "John Travolta, Uma Thurman, Samuel L. Jackson", "Miramax", 3859481728);
+VALUES ("Pulp Fiction", "Quentin Tarantino", 178, "PG-13", "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", "John Travolta, Uma Thurman, Samuel L. Jackson", "Miramax", 3859481728);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("Black Panther", "Ryan Coogler", 134, "PG-13", "T'Challa, the King of Wakanda, rises to the throne in the isolated, technologically advanced African nation, but his claim is challenged by a vengeful outsider who was a childhood victim of T'Challa's father's mistake", "Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Danai Gurira", "Marvel Studios, Walt Disney", 9586748590);
+INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
+VALUES ("FAST FIFTY", "Arfus Chen", 120, "G", "Go fast. Go furious", "Dude_1", "My house", 9586748590);
+
+
+
 
 -- playing
 INSERT INTO playing VALUES ("2018-03-20", "2018-06-15", "complex_1", 1);
@@ -229,13 +236,13 @@ VALUES ("Christopher", "Ko", 4164164166, "WHAT", "chrissycakez", "chris.ko@queen
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
 VALUES ("Alfred", "Chen", 7897897899, "UP", "alfredlixi", "alfred.chen@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333333333333", "2021-07-00");
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
-VALUES ("test4fname", "test4lname", 123123456, "test4", "test4", "test4@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399933333", "2021-07-00");
+VALUES ("Alice", "test4lname", 123123456, "test4", "test4", "test4@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399933333", "2021-07-00");
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
-VALUES ("test1fname", "test1lname", 123123456, "test1", "test1", "test1@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333333", "2021-07-00");
+VALUES ("John", "test1lname", 123123456, "test1", "test1", "test1@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333333", "2021-07-00");
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
-VALUES ("test2fname", "test2lname", 123723456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333303", "2021-07-00");
+VALUES ("Shelly", "test2lname", 123723456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3333333399333303", "2021-07-00");
 INSERT INTO customer(fname, lname, phone_number, password, login_id, email, street, city, postal_code, credit_card_num, credit_expiry_date)
-VALUES ("test3fname", "test3lname", 193123456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3343333399333333", "2021-07-00");
+VALUES ("Noah", "test3lname", 193123456, "test2", "test2", "test2@queensu.ca", "32 King Street", "Kingston", "W33GH9", "3343333399333333", "2021-07-00");
 
 
 -- admin
@@ -256,6 +263,13 @@ INSERT INTO reviews VALUES ("5/5", 3, 2);
 INSERT INTO reviews VALUES ("I have never seen such an amazing film since I saw The Shawshank Redemption. Shawshank encompasses friendships, hardships, hopes, and dreams. And what is so great about the movie is that it moves you, it gives you hope. Even though the circumstances between the characters and the viewers are quite different, you don't feel that far removed from what the characters are going through.",4,4);
 INSERT INTO reviews VALUES ("Tell me a movie that is more famous than this. Tell me a movie that has had more parodies spinned off its storyline than this. Tell me one movie that has been as quoted as a much as this. The answer is you can't. No movie has had as much of an impact as The Godfather has had ever since it was released.",5,4);
 INSERT INTO reviews VALUES ("We've been subjected to enormous amounts of hype and marketing for the Dark Knight. We've seen Joker scavenger hunts and one of the largest viral campaigns in advertising history and it culminates with the actual release of the movie. Everything that's been said is pretty much spot on. This is the first time I can remember where a summer blockbuster film far surpasses the hype.For as much action as there is in this movie, it's the acting that makes it a great piece of work. Between all the punches, explosions and stunt-work is some great dialog work. All the actors have their moments.",6,4);
+
+INSERT INTO reviews VALUES ("Loved this film!.", 4, 3);
+INSERT INTO reviews VALUES ("Retweet if you cry everytime!", 2, 3);
+INSERT INTO reviews VALUES ("I am moved", 4, 5);
+
+
+
 
 
 -- reserves
