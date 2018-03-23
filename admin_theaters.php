@@ -75,7 +75,7 @@
                     }
                 });
             });
-            
+
 
             $('#del_theatre').on('click', function (e) {
                 e.preventDefault();
@@ -113,7 +113,7 @@
                             <div class="form-group">
                                 <label for="cname">Name</label>
                                 <input type="text" class="form-control" id="input_cname" name="cname" placeholder="">
-                            </div>        
+                            </div>
                             <div class="form-group">
                                 <label for="cstreet">Address</label>
                                 <input type="text" class="form-control" id="input_cstreet" name="cstreet" placeholder="">
@@ -189,7 +189,7 @@
                     <div class="row">
                         <div class="col-md-12">
                         <form id="AddTheatre" method="post" action="add_theatre.php">
-                            <div  class="form-group">   
+                            <div  class="form-group">
                             <label for="size">Screen Size</label>
                             <select class="form-control" id="addsize" name="size">
                                 <option class="dropdown-item" name="1" value="S">S</option>
@@ -269,7 +269,7 @@
                             </table>
                             <button type="button" id="del_theatre" class="btn btn-danger" disabled>Delete Theatre</button>
                             <button type="button" id="edit_theatre" class="btn btn-warning" data-toggle="modal" data-target="#modalt_div" disabled>Edit Theatre</button>
-                            
+
 
                             </form>
                             </div>
@@ -299,11 +299,11 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="edit_complex_f" method="post" action="edit_complex.php"> 
+                <form id="edit_complex_f" method="post" action="edit_complex.php">
                     <div class="form-group">
                         <label for="cname">Name</label>
                         <input type="text" class="form-control" id="e_name" name="cname" placeholder="">
-                    </div>       
+                    </div>
                     <div class="form-group">
                         <label for="cstreet">Address</label>
                         <input type="text" class="form-control" id="e_cstreet" name="cstreet" placeholder="">
@@ -338,7 +338,7 @@
             </div>
             <div class="modal-body">
                 <form id="edit_theatre_t" method="post" action="edit_theatre.php">
-                    <div  class="form-group">   
+                    <div  class="form-group">
                     <label for="size">Screen Size</label>
                     <select class="form-control" id="addsize" name="size">
                         <option class="dropdown-item" name="1" value="S">S</option>
@@ -350,12 +350,12 @@
                         <label for="addseats">Number of Seats</label>
                         <input type="text" class="form-control" id="addseats" name="addseats" placeholder="">
                     </div>
-                    
+
                     <button type="submit" id="edit_complex_s" class="btn btn-warning">Update</button>
                 </form>
             </div>
             </div>
         </div>
-        </div> 
+        </div>
   </body>
 </html>

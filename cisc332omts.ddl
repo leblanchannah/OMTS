@@ -201,10 +201,6 @@ INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, produc
 VALUES ("Pulp Fiction", "Quentin Tarantino", 178, "PG-13", "The lives of two mob hitmen, a boxer, a gangster's wife, and a pair of diner bandits intertwine in four tales of violence and redemption.", "John Travolta, Uma Thurman, Samuel L. Jackson", "Miramax", 3859481728);
 INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
 VALUES ("Black Panther", "Ryan Coogler", 134, "PG-13", "T'Challa, the King of Wakanda, rises to the throne in the isolated, technologically advanced African nation, but his claim is challenged by a vengeful outsider who was a childhood victim of T'Challa's father's mistake", "Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o, Danai Gurira", "Marvel Studios, Walt Disney", 9586748590);
-INSERT INTO movie(title, director, length, rating, plot_synopsis, actors, production_company, supplier_phone_number)
-VALUES ("FAST FIFTY", "Arfus Chen", 120, "G", "Go fast. Go furious", "Dude_1", "My house", 9586748590);
-
-
 
 
 -- playing

@@ -12,13 +12,13 @@ if (isset($_POST["tcomplex5"]) && !empty($_POST["tcomplex5"])) {
         $rows = $dbh->query('select * from theatre where name="'.$_POST["tcomplex5"].'"');
     }
     foreach($rows as $row) {
-            echo '<tr id="'.$row[0].$_POST['tcomplex5'].'"><td><div class="radio"><label><input type="radio"" id="check" name="num" value="'.$row[0].'"></label></div></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td></tr>';
+            echo '<tr id="'.$row[0].$_POST['tcomplex5'].'"><td><div class="radio"><label><input type="radio"" id="check" name="num" value="'.$row[0].'"></label></div></td><td>'.$row[0].'</td><td>'.$row[2].'</td><td>'.$row[1].'</td></tr>';
     }
     } catch (PDOException $e ) {
         // send error message
         echo $errorMessage;
     }
-} 
+}
 $dbh = null;
 
 
