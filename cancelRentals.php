@@ -34,14 +34,17 @@
           <div class="card-body">
 
           <form action='setCancelPurchaseFlag.php' method='post'>
-
+             <?php 
+             date_default_timezone_set('America/Toronto');
+                $date = date('Y-m-d G:i');
+             echo "Current time: ".$date;?>
             <table class="table table-hover">
               <thead>
                 <tr>
                 <th scope="col"></th>
                   <th scope="col">Title</th>
                   <th scope="col">Theatre Complex</th>
-                  <th scope="col">Booking Time</th>
+                  <th scope="col">Start Time</th>
                   <th scope="col">Quantity</th>
                 </tr>
               </thead>
@@ -55,12 +58,15 @@
               where ".$_SESSION['user_id']." = account_number");
               //Create my table 
               foreach($oldRentals as $temp){
+                
+               if($date < $temp["start_time"] & $temp['cancel_flag']!=1){
                  $multi_key = implode("|", array($temp['num'], $temp['name'], $temp['start_time'], $temp['movie_id']));
                  // if ($date <= $row["start_time"]) { // only displaying showings that are active
                     echo "<tr>";
                     echo "<td><div class='radio'><label><input type='radio' id='regular' name='cancel_purchase' checked value='".$multi_key."'></label></div></td>";
-              echo '<td>'.$temp['title'].'</td><td>'.$temp['name'].'</td><td>'.$temp['booking_time'].'</td><td>'.$temp['seats_reserved'].'</td></tr>';
+              echo '<td>'.$temp['title'].'</td><td>'.$temp['name'].'</td><td>'.$temp['start_time'].'</td><td>'.$temp['seats_reserved'].'</td></tr>';
               }
+            }
               echo '</body>';
               
               

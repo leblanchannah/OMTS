@@ -118,7 +118,7 @@
                 $update->bindParam(':booking_time', $time,PDO::PARAM_STR);
                 $update->bindParam(':account_number',  $account_number,PDO::PARAM_STR);
                 if($update -> execute()){
-                    echo "Updated Booking on: ".$time;
+                    echo "Updated Booking on: ".$time. "with starting time: ".$start_time;
                 }
                 else{
                   echo "It didnt work";
