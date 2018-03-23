@@ -19,13 +19,12 @@
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" data-toggle="tooltip" title="View or cancel purchases" href="#">Purchases
+                 <a class="nav-link" data-toggle="tooltip" href="cancelRentals.php">Cancel Purchases
                     <span class="sr-only">(current)</span>
                 </a>
-            </li>
-
-            <li class="nav-item active">
-                 <a class="nav-link" data-toggle="tooltip" href="oldRentals.php">Past Rentals
+              </li>
+              <li class="nav-item active">
+                 <a class="nav-link" data-toggle="tooltip" href="oldRentals.php">Past Purchases
                     <span class="sr-only">(current)</span>
                 </a>
               </li>

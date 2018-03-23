@@ -64,7 +64,7 @@
                 <?php
                 date_default_timezone_set('America/Toronto');
                 $timezone = date_default_timezone_get();
-                $date = date('Y-m-d');
+                $date = date('Y-m-d G:i');
 
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                 // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
