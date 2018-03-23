@@ -87,8 +87,21 @@
               ?>
                 </tbody>
               </table>
+              <div class="form-group">
               <label for="num_tickets"># of Tickets</label>
+              <select class="form-control" id="num_tickets" name="num_tickets">
+                <?php
+              for( $i = 1; $i<$row["avail"]+1; $i++ ) {
+                          echo"  <option class='dropdown-item' name=$i value=$i>$i</option>";
+              }
+              ?>
+                            </select>
+
+            </div>
+
+              <!-- <label for="num_tickets"># of Tickets</label>
               <input class="form-control col-md-3 mb-3" id="num_tickets" name="num_tickets" type="text" value="1">
+               -->
               <input class="btn btn-primary" type="submit" value="Reserve Seats">
             </form>
           </div>
