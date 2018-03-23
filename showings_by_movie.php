@@ -36,7 +36,7 @@
           <div class="card-header">Showings for:
           <?php
             $_POST = $_SESSION['browse_movies_post_data'];
-            unset($_SESSION['browse_movies_post_data']);
+            // unset($_SESSION['browse_movies_post_data']);
 
             $selected_movie = $_POST['selected_movie'];
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
