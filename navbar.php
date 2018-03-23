@@ -35,4 +35,11 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </form>-->
     </div>
+    <div class="navbar-collapse collapse order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">Log Out</a>
+            </li>
+        </ul>
+    </div>
 </nav>
