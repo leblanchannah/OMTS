@@ -21,8 +21,6 @@
     <link href="customer.css" rel="stylesheet">
     <script>
     $(document).ready(function () {
-        $('#goodcall').fadeToggle("slow");
-        $('#badcall').fadeToggle("slow");
 
        $( "#complextable input:radio" ).prop("checked", true);
        $( "#theatresfromc input:radio" ).prop("checked", true);
@@ -70,15 +68,9 @@
                     success:function(data) {
                          if (data != "error") {
                             $('table#complextable tr#'+data).remove();
-                            $('#goodcall').text("Success: deleted complex.")
-                            $('#goodcall').fadeToggle("slow");
-                            $('#goodcall').fadeToggle("slow");
+                            alert("Success: deleted complex.");
                          } else {
                             alert("Unable to delete user.");
-                            $('#badcall').text("Error: unable to delete complex.")
-                            $('#badcall').fadeToggle("slow");
-                            $('#badcall').fadeToggle("slow");
-
                          }
                     }
                 });
@@ -94,15 +86,10 @@
                     success:function(data) {
                          if (data != "error") {
                             $('table#ts tr#'+data).remove();
-                            $('#goodcall').text("Success: deleted complex.")
-                            $('#goodcall').fadeToggle("slow");
-                            $('#goodcall').fadeToggle("slow");
-                         } else {
-                            alert("Unable to delete user.");
-                            $('#badcall').text("Error: unable to delete complex.")
-                            $('#badcall').fadeToggle("slow");
-                            $('#badcall').fadeToggle("slow");
+                            alert("Success: deleted theatre.");
 
+                         } else {
+                            alert("Error: unable to delete theatre.");
                          }
                     }
                 });
@@ -115,13 +102,6 @@
   </head>
   <body>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-            <div class="alert alert-success" id="goodcall"></div>
-            <div class="alert alert-danger" id="badcall"></div>
-            </div>
-            <!--/.col-sm-12 -->
-        </div>
         <div class="row">
         <div class="col-md-4">
             <div class="card card-default">

@@ -1,5 +1,6 @@
 <!-- admin -->
-<?php include 'adminnavbar.php'?>
+<?php include 'adminnavbar.php';
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,7 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <!--https://bootsnipp.com/snippets/featured/login-and-register-tabbed-form -->
     <!-- Custom styles for this template -->
@@ -23,9 +24,6 @@
     <script>
         $(document).ready(function () {
 
-           
-            $('#goodcall').fadeToggle("slow");
-            $('#badcall').fadeToggle("slow");
             $('#customer-delete').on('click', function (e) {
                 e.preventDefault();
                 console.log("customer-delete button clicked");
@@ -36,15 +34,10 @@
                     success:function(data) {
                         if (data != "error") {
                             $('table#all_customers tr#'+data).remove();
-                            $('#goodcall').text("Success: deleted user.")
-                            $('#goodcall').fadeToggle("slow");
-                            $('#goodcall').fadeToggle("slow");
+                            alert("Success: deleted user.");
+
                         } else {
                             alert("Unable to delete user.");
-                            $('#badcall').text("Error: unable to delete user.")
-                            $('#badcall').fadeToggle("slow");
-                            $('#badcall').fadeToggle("slow");
-
                         }
                     }
                 });
@@ -56,13 +49,6 @@
   </head>
 <body>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-success" id="goodcall"></div>
-      <div class="alert alert-danger" id="badcall"></div>
-    </div>
-    <!--/.col-sm-12 -->
-  </div>
   <!-- /.row> -->
   <div class="row">
     <div class="col-md-3">
@@ -123,8 +109,13 @@
 
                          ?>
 
-          </select><button type="submit" class="btn btn-primary">Submit</button>
+          </select><br><button type="submit" class="btn btn-primary">Submit</button>
+          
           </div>
+          </form>
+          <hr>
+          <form>
+          <button type="button" class="btn btn-warning" disabled>All Movies</button>
           </form>
 
 
