@@ -131,7 +131,7 @@ start_time		DATETIME	NOT NULL,
 movie_id INTEGER NOT NULL,
 
 seats_reserved integer NOT NULL,
-booking_time DATE NOT NULL,
+booking_time DATETIME NOT NULL,
 cancel_flag	BOOLEAN NOT NULL,
 
 PRIMARY KEY(account_number, num, name, start_time, movie_id),

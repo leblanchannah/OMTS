@@ -60,7 +60,6 @@ else{
         $add->bindParam('credit_expiry_num', $_POST['credit_expiry_date'],PDO::PARAM_STR);
         $add->bindParam(':login_id',  $_POST['login_id'],PDO::PARAM_STR);
         if($add -> execute()){
-            session_destroy();
             header("Location: login.html");
         }
     else{
