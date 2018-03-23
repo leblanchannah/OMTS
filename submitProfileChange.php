@@ -30,6 +30,6 @@
         header("Location: browse_complex.php");
     }
 else{
-    echo $errorMessage;
+    echo "profile could not be updated";
 }
     ?>

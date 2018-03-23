@@ -33,16 +33,17 @@
 
       <div class="col-md-9 mb-3">
         <div class="card card-default">
-          <div class="card-header">Showing for:
+          <div class="card-header">Booking:
           <?php
-            list($num, $name, $start_time, $movie_id) = explode("|", $_POST['selected_showing']);
+            $num_tickets=$_POST['num_tickets'];
+            list($num, $complexName, $start_time, $movie_id) = explode("|", $_POST['optradio']);
             $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
             $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
-            foreach($rows as $row) {
+            $row = $rows ->fetch(); 
                 echo $row['title']
                 ." at "
-                .$name;
-            }
+                .$complexName;
+          
             $dbh = null;
             ?>
             </div>
@@ -51,12 +52,11 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                  <th scope="col"></th>
                         <th scope="col">Movie</th>
                         <th scope="col">Theatre Complex</th>
                         <th scope="col">Theatre</th>
                         <th scope="col">Start Time</th>
-                        <th scope="col">Seats Available</th>
+                        <th scope="col">Seats Reserved</th>
 
                   </tr>
                 </thead>
@@ -64,92 +64,77 @@
                 <?php
                 date_default_timezone_set('America/Toronto');
                 $timezone = date_default_timezone_get();
-                $date = date('Y-m-d');
-
+                $time = date('Y-m-d G:i');
                 $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                // $rows = $dbh->query('select s.start_time, s.num, m.title, m.movie_id from showing s join movie m on s.movie_id = m.movie_id where s.name ='.'"'.$theatre_complex.'"');
-                $rows = $dbh->query("SELECT title, num, name, start_time, avail, movie.movie_id FROM (SELECT all_seats.start_time, all_seats.movie_id, all_seats.num, all_seats.name, (all_seats.max_seats-IFNULL(available_seats.booked,0)) avail FROM (SELECT start_time,movie_id,showing.num,showing.name,theatre.max_seats FROM showing INNER JOIN theatre ON showing.num = theatre.num AND showing.name = theatre.name) all_seats LEFT OUTER JOIN (SELECT name, num, start_time, movie_id, SUM(seats_reserved) as booked FROM reserves GROUP BY name, num, start_time, movie_id) available_seats ON all_seats.start_time = available_seats.start_time AND all_seats.num = available_seats.num AND all_seats.name=available_seats.name GROUP BY all_seats.start_time, all_seats.num, all_seats.name) seats LEFT JOIN movie ON seats.movie_id = $movie_id WHERE name =".$dbh->quote($name)."AND num=$num AND movie.movie_id=$movie_id");
-                foreach($rows as $row) {
-                  // num, name, start_time, movie_id
-                  $multi_key = implode("|", array($row['num'], $name, $row['start_time'], $row['movie_id']));
-                  if ($date <= $row["start_time"]) { // only displaying showings that are active
-                    echo "<tr>";
-                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='optradio' value='".$multi_key."' checked></label></div></td>";
-                    echo "<td>".$row["title"]."</td>";
-                    echo "<td>".$row["name"]."</td>";
-                    echo "<td>".$row["num"]."</td>";
-                    echo "<td>".$row["start_time"]."</td>";
-                    echo "<td>".$row["avail"]."</td>";
-                    echo "</tr>";
+                echo "<tr>";
+                echo "<td>".$row["title"]."</td>";
+                echo "<td>".$complexName."</td>";
+                echo "<td>".$num."</td>";
+                echo "<td>".$start_time."</td>";
+                echo "<td>".$num_tickets."</td>";
+                echo "</tr>";
+                $account_number = $_SESSION['user_id'];
+
+                $check = $dbh->query("SELECT count(*) c FROM reserves r where( r.account_number = $account_number and r.num = $num and r.name =".$dbh->quote($complexName)." and r.start_time = ".$dbh->quote($start_time)." and movie_id = $movie_id)");
+                $checker = $check ->fetch();
+
+                if ($checker['c']==0){
+                  $query = " INSERT INTO reserves (account_number, num, name, start_time, movie_id, seats_reserved, booking_time, cancel_flag)
+                  VALUES (:account_number, :num, :name, :start_time, :movie_id, :seats_reserved, :booking_time, 0)";
+              
+                  $add = $dbh->prepare($query);
+                  
+                  $add->bindParam(':movie_id', $movie_id,PDO::PARAM_STR);
+                  $add->bindParam(':num', $num,PDO::PARAM_STR);
+                  $add->bindParam(':name', $complexName,PDO::PARAM_STR);
+                  $add->bindParam(':start_time', $start_time,PDO::PARAM_STR);
+                  $add->bindParam(':seats_reserved', $num_tickets,PDO::PARAM_STR);
+                  $add->bindParam(':booking_time', $time,PDO::PARAM_STR);
+                  $add->bindParam(':account_number',  $account_number,PDO::PARAM_STR);
+                  if($add -> execute()){
+                      echo "Confirmed Booking!";
                   }
+                  else{
+                    echo "It didnt work";
+                  }
+              }
+              else{
+                $query = "UPDATE reserves r SET 
+                r.seats_reserved = :seats_reserved,
+                r.booking_time = :booking_time,
+                r.cancel_flag = 0
+                 WHERE (r.account_number = :account_number 
+                  and r.num = :num and r.name = :name 
+                  and r.start_time = :start_time
+                  and  movie_id = :movie_id)";
+
+                $update = $dbh->prepare($query);
+                
+                $update->bindParam(':movie_id', $movie_id,PDO::PARAM_STR);
+                $update->bindParam(':num', $num,PDO::PARAM_STR);
+                $update->bindParam(':name', $complexName,PDO::PARAM_STR);
+                $update->bindParam(':start_time', $start_time,PDO::PARAM_STR);
+                $update->bindParam(':seats_reserved', $num_tickets,PDO::PARAM_STR);
+                $update->bindParam(':booking_time', $time,PDO::PARAM_STR);
+                $update->bindParam(':account_number',  $account_number,PDO::PARAM_STR);
+                if($update -> execute()){
+                    echo "Updated Booking on: ".$time;
                 }
+                else{
+                  echo "It didnt work";
+                }
+              }
+
                 $dbh = null;
+                
               ?>
                 </tbody>
               </table>
-              <input class="btn btn-primary" type="submit" value="Reserve Seats">
             </form>
           </div>
           </div>
 
         </div>
-
-
-    <div class="col-md-6">
-        <div class="card card-default mb-3">
-          <div class="card-header">Contact Details</div>
-          <div class="card-body">
-          <?php
-            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $rows = $dbh->query('SELECT * FROM theatre_complex c where c.name='.$dbh->quote($name));
-            foreach($rows as $row) {
-                echo $row['name']."<br>";
-                echo $row['city']."<br>";
-                echo $row['street']."<br>";
-                echo $row['postal_code']."<br>";
-                echo $row['phone_number']."<br>";
-            }
-            $dbh = null;
-            ?>
-          </div>
-          </div>
-          </div>
-
-
-    <div class="col-md-6">
-        <div class="card card-default">
-          <div class="card-header">Movie:
-          <?php
-            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
-            foreach($rows as $row) {
-                echo $row['title'];
-            }
-            $dbh = null;
-            ?>
-            </div>
-          <div class="card-body">
-          <?php
-            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-            $rows = $dbh->query("SELECT * FROM movie m where m.movie_id = $movie_id");
-            foreach($rows as $row) {
-                echo "Director: ".$row['director']."<br>";
-                echo "Length: ".$row['length']." mins<br>";
-                echo "Rating: ".$row['rating']."<br>";
-                echo "Actors: ".$row['actors']."<br>";
-                echo "Synopsis: ".$row['plot_synopsis']."<br>";
-                echo "Production Company: ".$row['production_company']."<br>";
-            }
-            $dbh = null;
-            ?>
-          </div>
-          </div>
-          </div>
-
-        </div>
-      </div>
-
-
 
 
       <!-- Bootstrap core JavaScript

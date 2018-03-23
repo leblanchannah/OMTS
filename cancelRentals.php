@@ -33,14 +33,16 @@
           <div class="card-header">Past Rentals</div>
           <div class="card-body">
 
-          <table class="table table-hover">
+          <form action='setCancelPurchaseFlag.php' method='post'>
+
+            <table class="table table-hover">
               <thead>
                 <tr>
+                <th scope="col"></th>
                   <th scope="col">Title</th>
                   <th scope="col">Theatre Complex</th>
                   <th scope="col">Booking Time</th>
                   <th scope="col">Quantity</th>
-                  <th scope="col">Cancelled</th>
                 </tr>
               </thead>
               <?php 
@@ -48,19 +50,16 @@
               // connect to database
               $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
               // run query
-              $oldRentals = $dbh->query("select  title, name, booking_time, seats_reserved, cancel_flag from reserves  
+              $oldRentals = $dbh->query("select * from reserves  
               rev JOIN movie  mov ON mov.movie_id =  rev.movie_id 
               where ".$_SESSION['user_id']." = account_number");
               //Create my table 
               foreach($oldRentals as $temp){
-                  if($temp[4] == 0 ){
-                      $cancel = "";
-                  }
-                  else{
-                      $cancel = "Cancelled";
-                  }
-
-              echo '<tr><td>'.$temp[0].'</td><td>'.$temp[1].'</td><td>'.$temp[2].'</td><td>'.$temp[3].'</td><td>'.$cancel.'</td></tr>';
+                 $multi_key = implode("|", array($temp['num'], $temp['name'], $temp['start_time'], $temp['movie_id']));
+                 // if ($date <= $row["start_time"]) { // only displaying showings that are active
+                    echo "<tr>";
+                    echo "<td><div class='radio'><label><input type='radio' id='regular' name='cancel_purchase' checked value='".$multi_key."'></label></div></td>";
+              echo '<td>'.$temp['title'].'</td><td>'.$temp['name'].'</td><td>'.$temp['booking_time'].'</td><td>'.$temp['seats_reserved'].'</td></tr>';
               }
               echo '</body>';
               
@@ -98,6 +97,8 @@
                 </tr>
               </tbody> -->
             </table>
+            <input class="btn btn-primary" type="submit" value="Cancel Purchase">
+            </form>
             </div>
             </div>
           </div>
