@@ -36,7 +36,7 @@
           <div class="card-header">Select a Movie</div>
 
           <div class="card-body">
-          <form action='showings_by_movie.php' method='post'>
+          <form action='movie_buttons.php' method='post'>
             <?php
               $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
               $rows = $dbh->query("SELECT * FROM movie m");
@@ -51,6 +51,7 @@
                             '<p class="card-text">Rating: '.$row['rating'].'</p>'.
                             '<p class="card-text">Synopsis: '.$row['plot_synopsis'].'</p>'.
                             '<button type="submit" name="selected_movie" id="selected_movie" value='.$row['movie_id'].' class="btn btn-primary">Select Movie</button>'.
+                            '<button type="submit" name="reviews" id="reviews" value='.$row['movie_id'].' class="btn btn-secondary">Reviews</button>'.
                           '</div>'.
                         '</div>'.
                       '</div>';

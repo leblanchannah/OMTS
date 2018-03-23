@@ -281,8 +281,8 @@
                                         $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
                                         $rows = $dbh->query('select * from theatre');
                                         foreach($rows as $row) {
-                                            echo '<tr><td><div class="radio"><label><input type="radio"" id="check" name="complex_name" value="'.$row[3].'"></label></div>'.
-                                            '<input type="hidden" id="check" name="num" value="'.$row[0].'"></td><td>'.$row[0].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td></tr>';
+                                            echo '<tr><td><div class="radio"><label><input type="radio"" id="check" name="theat_num" value="'.$row[2].'"></label></div>'.
+                                            '<input type="hidden" id="check" name="num" value="'.$row[0].'"></td><td>'.$row[0].'</td><td>'.$row[2].'</td><td>'.$row[1].'</td></tr>';
                                         }
                                     ?>
                                 </tbody>
