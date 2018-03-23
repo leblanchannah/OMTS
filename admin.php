@@ -1,5 +1,6 @@
 <!-- admin -->
-<?php include 'adminnavbar.php'?>
+<?php include 'adminnavbar.php';
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -23,9 +24,6 @@
     <script>
         $(document).ready(function () {
 
-           
-            $('#goodcall').fadeToggle("slow");
-            $('#badcall').fadeToggle("slow");
             $('#customer-delete').on('click', function (e) {
                 e.preventDefault();
                 console.log("customer-delete button clicked");
@@ -36,15 +34,10 @@
                     success:function(data) {
                         if (data != "error") {
                             $('table#all_customers tr#'+data).remove();
-                            $('#goodcall').text("Success: deleted user.")
-                            $('#goodcall').fadeToggle("slow");
-                            $('#goodcall').fadeToggle("slow");
+                            alert("Success: deleted user.");
+
                         } else {
                             alert("Unable to delete user.");
-                            $('#badcall').text("Error: unable to delete user.")
-                            $('#badcall').fadeToggle("slow");
-                            $('#badcall').fadeToggle("slow");
-
                         }
                     }
                 });
@@ -56,13 +49,6 @@
   </head>
 <body>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="alert alert-success" id="goodcall"></div>
-      <div class="alert alert-danger" id="badcall"></div>
-    </div>
-    <!--/.col-sm-12 -->
-  </div>
   <!-- /.row> -->
   <div class="row">
     <div class="col-md-3">
@@ -123,8 +109,13 @@
 
                          ?>
 
-          </select><button type="submit" class="btn btn-primary">Submit</button>
+          </select><br><button type="submit" class="btn btn-primary">Submit</button>
+          
           </div>
+          </form>
+          <hr>
+          <form>
+          <button type="button" class="btn btn-warning">All Movies</button>
           </form>
 
 
