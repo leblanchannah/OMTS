@@ -44,6 +44,12 @@
                 echo 'Logged in as: '.$result['login_id'];?>
                 </a>
             </li>
+            
+    
+            <li class="nav-item">
+                <a class="nav-link" href="logout.php">Log Out</a>
+            </li>
+
         </ul>
     </div>
 </nav>

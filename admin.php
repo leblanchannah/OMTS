@@ -51,79 +51,9 @@
 <div class="container">
   <!-- /.row> -->
   <div class="row">
-    <div class="col-md-3">
-      <div class="card card-default">
-        <div class="card-header">Add Movie</div>
-        <div class="card-body">
-          <form id="add_movie" method="post" action="add_movie.php">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" class="form-control" id="title" name="title" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="director">Director</label>
-              <input type="text" class="form-control" id="director" name="director" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="length">Length (minutes) </label>
-              <input type="text" class="form-control" name="length" id="length" placeholder="">
-            </div>
-            <div class="form-group">
-              <label for="plotsynopsis">Plot Synopsis</label>
-              <input type="text" class="form-control" name="plotsynopsis" id="plotsynopsis" placeholder="">
-            </div>
-            <!-- drop down???-->
-            <div class="form-group">
-              <label for="rating">Rating</label>
-              <select class="form-control" id="rating" name="rating">
-                            <option class="dropdown-item" name="1" value="G">G</option>
-                            <option class="dropdown-item" name="2" value="PG">PG</option>
-                            <option class="dropdown-item" name="3" value="14-A">14-A</option>
-                            <option class="dropdown-item" name="4" value="18-A">18-A</option>
-                            <option class="dropdown-item" name="5" value="R">R</option>
-                            </select>
-
-            </div>
-            <div class="form-group">
-              <label for="actors">Actors</label>
-              <input type="text" class="form-control" id="actors" name="actors" placeholder="">
-            </div>
-            <!-- drop down -->
-            <div class="form-group">
-              <label for="productioncompany">Production Company</label>
-              <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
-            </div>
-            <!-- supplier dropdown -->
-            <div class="form-group">
-              <label for="supplier">Supplier</label>
-              <select class="form-control" name="supplier">
-                        <?php
-                        // add try catch
-                            $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
-                            $rows = $dbh->query('select name,phone_number from supplier');
-
-                            foreach($rows as $row) {
-                                 echo '<option class="dropdown-item" name="supplier" value="'.$row[1].'">'.$row[0].'</option>';
-                            }
-                            $dbh = null;
-
-                         ?>
-
-          </select><br><button type="submit" class="btn btn-primary">Submit</button>
-          
-          </div>
-          </form>
-          <hr>
-          <form>
-          <button type="button" class="btn btn-warning" disabled>All Movies</button>
-          </form>
-
-
-    </div>
-    </div>
-  </div>
+ 
   <!-- /.col-lg-3 -->
-  <div class="col-md-9">
+  <div class="col-md-12">
     <div class="row">
     <div class="col-md-12">
     
@@ -227,9 +157,102 @@
   </div>
     <!-- /.col-lg-9 -->
 </div>
-</div>
-<!-- /.row> -->
-<!-- /. container -->
+</div><br><hr><br>
+<div class="row">
+
+<div class="col-md-3">
+      <div class="card card-default">
+        <div class="card-header">Add Movie</div>
+        <div class="card-body">
+          <form id="add_movie" method="post" action="add_movie.php">
+            <div class="form-group">
+              <label for="title">Title</label>
+              <input type="text" class="form-control" id="title" name="title" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="director">Director</label>
+              <input type="text" class="form-control" id="director" name="director" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="length">Length (minutes) </label>
+              <input type="text" class="form-control" name="length" id="length" placeholder="">
+            </div>
+            <div class="form-group">
+              <label for="plotsynopsis">Plot Synopsis</label>
+              <input type="text" class="form-control" name="plotsynopsis" id="plotsynopsis" placeholder="">
+            </div>
+            <!-- drop down???-->
+            <div class="form-group">
+              <label for="rating">Rating</label>
+              <select class="form-control" id="rating" name="rating">
+              <option class="dropdown-item" name="1" value="G">G</option>
+              <option class="dropdown-item" name="2" value="PG">PG</option>
+              <option class="dropdown-item" name="3" value="14-A">14-A</option>
+              <option class="dropdown-item" name="4" value="18-A">18-A</option>
+              <option class="dropdown-item" name="5" value="R">R</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="actors">Actors</label>
+              <input type="text" class="form-control" id="actors" name="actors" placeholder="">
+            </div>
+            <!-- drop down -->
+            <div class="form-group">
+              <label for="productioncompany">Production Company</label>
+              <input type="text" class="form-control" id="productioncompany" name="production_company" placeholder="">
+            </div>
+            <!-- supplier dropdown -->
+            <div class="form-group">
+              <label for="supplier">Supplier</label>
+              <select class="form-control" name="supplier">
+                  <?php
+                  // add try catch
+                      $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+                      $rows = $dbh->query('select name,phone_number from supplier');
+
+                      foreach($rows as $row) {
+                            echo '<option class="dropdown-item" name="supplier" value="'.$row[1].'">'.$row[0].'</option>';
+                      }
+                      $dbh = null;
+
+                    ?>
+          </select><br><button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          </div>
+     </div>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card card-default">
+      <div class="card-header">Movies</div>
+      <div class="card-body">
+      <form action='movie_buttons.php' method='post'>
+        <?php
+          $dbh = new PDO('mysql:host=localhost;dbname=db_omts', "root", "");
+          $rows = $dbh->query("SELECT * FROM movie m");
+          echo '<div class="row">';
+          foreach($rows as $row) {
+            echo '<div class="col-sm-6">'.
+              '<div class="card mb-4">'.
+                '<div class="card-body">'.
+                  '<h5 class="card-title">'.$row['title'].'</h5>'.
+                  '<p class="card-text">Director: '.$row['director'].'</p>'.
+                  '<p class="card-text">Length: '.$row['length'].' mins</p>'.
+                  '<p class="card-text">Rating: '.$row['rating'].'</p>'.
+                  '<p class="card-text">Synopsis: '.$row['plot_synopsis'].'</p>'.
+                
+                '</div>'.
+              '</div>'.
+            '</div>';
+          }
+          echo '</div>';
+        ?>
+            </form>
+          </div>
+      </div>
+    </div>
+  </div><!-- /.row> -->
+        </div><!-- /. container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
